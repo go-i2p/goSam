@@ -1,4 +1,4 @@
-golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83-2) UNRELEASED; urgency=medium
+golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83) UNRELEASED; urgency=medium
 
   [ idk ]
   * Update changelog for 0.1.0+git20190221.2896c83-1 release
@@ -12,12 +12,6 @@ golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83-2) UNRELEASED; urgency=
   * correct CONTRIBUTING.md
   * explicitly et invalid initial lastaddr
   * remove 'commented-out' id
-
- -- idk <hankhill19580@gmail.com>  Thu, 28 Feb 2019 13:54:27 -0500
-
-golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83-1) unstable; urgency=medium
-
-  [ idk ]
   * Initial release (Closes: TODO)
 
  -- idk <hankhill19580@gmail.com>  Sat, 23 Feb 2019 11:43:05 -0500
