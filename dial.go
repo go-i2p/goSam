@@ -59,16 +59,16 @@ func (c *Client) Dial(network, addr string) (net.Conn, error) {
 			return nil, err
 		}
 		c.lastaddr = addr
-		newC, err := c.NewClient()
+		c, err = c.NewClient()
 		if err != nil {
 			return nil, err
 		}
 
-		err = newC.StreamConnect(id, addr)
+		err = c.StreamConnect(id, addr)
 		if err != nil {
 			return nil, err
 		}
-		return newC.SamConn, nil
+		return c.SamConn, nil
 	}
 	c, err = c.NewClient()
 	if err != nil {
