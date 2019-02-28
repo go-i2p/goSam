@@ -123,30 +123,52 @@ Client.NewClient() function. To add it to allOptions, it looks like this:
 #### (b) Writing Tests
 
 Before the feature can be added, you'll need to add a test for it to
-options_test.go. These are also mostly simple to write. Building on the
-contrived example above, a test is basically just
+options_test.go. To do this, just add your new option to the long TestOptions
+functions in options_test.go.
 
 ``` Go
-        func TestOptionOption(t *testing.T) {
-            // First, we create a new goSam client using our new functional argument
-            client, err := NewClientFromOptions(SetOPTION("127.0.0.1:7656"), SetDebug(true)) //<-- use the new option you created here
+        func TestOptionHost(t *testing.T) {
+            client, err := NewClientFromOptions(
+                SetHost("127.0.0.1"),
+                SetPort("7656"),
+                ... //other options removed from example for brevity
+                SetCloseIdleTime(300001),
+            )
             if err != nil {
                 t.Fatalf("NewClientFromOptions() Error: %q\n", err)
             }
-            // the validCreate() function does offline validation of the option by
-            // examining the option strings as passed to SAM
             if result, err := client.validCreate(); err != nil {
                 t.Fatalf(err.Error())
             } else {
                 t.Log(result)
             }
-            // Finally, we create an unconnected session against the SAM bridge
-            // as a final test.
             client.CreateStreamSession("")
             if err := client.Close(); err != nil {
                 t.Fatalf("client.Close() Error: %q\n", err)
             }
         }
+
+        func TestOptionPortInt(t *testing.T) {
+            client, err := NewClientFromOptions(
+                SetHost("127.0.0.1"),
+                SetPortInt(7656),
+                ... //other options removed from example for brevity
+                SetUnpublished(true),
+            )
+            if err != nil {
+                t.Fatalf("NewClientFromOptions() Error: %q\n", err)
+            }
+            if result, err := client.validCreate(); err != nil {
+                t.Fatalf(err.Error())
+            } else {
+                t.Log(result)
+            }
+            client.CreateStreamSession("")
+            if err := client.Close(); err != nil {
+                t.Fatalf("client.Close() Error: %q\n", err)
+            }
+        }
+
 ```
 
 If any of these tasks fail, then the test should fail.
