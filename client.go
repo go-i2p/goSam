@@ -17,7 +17,6 @@ type Client struct {
 
 	SamConn net.Conn
 	rd      *bufio.Reader
-	//id      int32
 
 	sigType     string
 	destination string
