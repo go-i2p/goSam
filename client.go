@@ -45,7 +45,7 @@ type Client struct {
 	compression bool
 
 	debug bool
-	//NEVER, EVER modify lastaddr yourself.
+	//NEVER, EVER modify lastaddr or id yourself. They are used internally only.
 	lastaddr string
 	id       int32
 }
@@ -68,6 +68,7 @@ func NewClient(addr string) (*Client, error) {
 	return NewClientFromOptions(SetAddr(addr))
 }
 
+// NewID generates a random number to use as an tunnel name
 func (c *Client) NewID() int32 {
 	return rand.Int31n(math.MaxInt32)
 }
@@ -155,6 +156,7 @@ func (c *Client) Close() error {
 	return c.SamConn.Close()
 }
 
+// NewClient generates an exact copy of the client with the same options
 func (c *Client) NewClient() (*Client, error) {
 	return NewClientFromOptions(
 		SetHost(c.host),

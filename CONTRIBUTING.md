@@ -91,8 +91,8 @@ option that is set, these must return strings representing valid i2cp options.
 
 [example](https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/options.go#L299)
 
-Lastly, you'll need to add it to the allOptions function, which would look like
-this:
+Lastly, you'll need to add it to the allOptions function and the
+Client.NewClient() function. To add it to allOptions, it looks like this:
 
 ``` Go
         //return all options as string ready for passing to sendcmd
@@ -102,6 +102,22 @@ this:
                 ... //other options removed from example for brevity
                 c.option()
         }
+```
+
+``` Go
+        //return all options as string ready for passing to sendcmd
+        func (c *Client) NewClient() (*Client, error) {
+            return NewClientFromOptions(
+                SetHost(c.host),
+                SetPort(c.port),
+                ... //other options removed from example for brevity
+                SetCompression(c.compression),
+                setlastaddr(c.lastaddr),
+                setid(c.id),
+            )
+        }
+}
+
 ```
 
 [example](https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/options.go#L333)
