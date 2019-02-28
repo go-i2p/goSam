@@ -5,6 +5,7 @@ Files-Excluded:
   Godeps/_workspace
 
 Files: *
+Copyright: 2014 cryptix
 Copyright: 2018 idk
 License: GPL-2.0
 
