@@ -9,6 +9,10 @@ Copyright: 2014 cryptix
 Copyright: 2018 idk
 License: GPL-2.0
 
+Files: debug
+Copyright: 2014 cryptix
+LICENSE: MIT
+
 Files: debian/*
 Copyright: 2019 idk <hankhill19580@gmail.com>
 License: GPL-2.0

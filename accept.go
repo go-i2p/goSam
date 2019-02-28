@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/cryptix/go/debug"
+	"github.com/eyedeekay/gosam/debug"
 )
 
 // Accept creates a new Client and accepts a connection on it

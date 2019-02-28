@@ -1,5 +1,6 @@
 github.com/cryptix/go v1.3.1 h1:I9opbROgEpldI0PwkMku0UY2DLFYgelZd9u0uaxmMgY=
 github.com/cryptix/go v1.3.1/go.mod h1:mFQotm9rTzptzvNjJM+1vSIDa/rVOVqMu0889GIXg70=
+github.com/eyedeekay/gosam v0.1.0 h1:rVhFSVgSNzPbkduxlqIz3+1z+g1EYkt3YCCHJE/rMb0=
 github.com/go-kit/kit v0.6.0/go.mod h1:xBxKIO96dXMWWy0MnWVtmwkA9/13aqxPnvrjFYMA2as=
 github.com/go-logfmt/logfmt v0.3.0/go.mod h1:Qt1PoO58o5twSAckw1HlFXLmHsOX5/0LbT9GBnD5lWE=
 github.com/go-stack/stack v1.7.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=

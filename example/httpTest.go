@@ -6,12 +6,12 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/cryptix/goSam"
+	"github.com/eyedeekay/gosam"
 )
 
 func main() {
 	//In order to enable debugging, pass the SetDebug(true) option.
-    //sam, err := goSam.NewClientFromOptions(SetDebug(true))
+	//sam, err := goSam.NewClientFromOptions(SetDebug(true))
 
 	// create a default sam client
 	sam, err := goSam.NewDefaultClient()

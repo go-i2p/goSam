@@ -7,7 +7,7 @@ import (
 	"math/rand"
 	"net"
 
-	"github.com/cryptix/go/debug"
+	"github.com/eyedeekay/gosam/debug"
 )
 
 // A Client represents a single Connection to the SAM bridge

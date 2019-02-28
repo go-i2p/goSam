@@ -43,7 +43,7 @@ func TestOptionAddrString(t *testing.T) {
 	} else {
 		t.Log(result)
 	}
-	client.CreateStreamSession("")
+	client.CreateStreamSession(client.NewID(), "")
 	if err := client.Close(); err != nil {
 		t.Fatalf("client.Close() Error: %q\n", err)
 	}
@@ -59,7 +59,7 @@ func TestOptionAddrStringLh(t *testing.T) {
 	} else {
 		t.Log(result)
 	}
-	client.CreateStreamSession("")
+	client.CreateStreamSession(client.NewID(), "")
 	if err := client.Close(); err != nil {
 		t.Fatalf("client.Close() Error: %q\n", err)
 	}
@@ -75,7 +75,7 @@ func TestOptionAddrSlice(t *testing.T) {
 	} else {
 		t.Log(result)
 	}
-	client.CreateStreamSession("")
+	client.CreateStreamSession(client.NewID(), "")
 	if err := client.Close(); err != nil {
 		t.Fatalf("client.Close() Error: %q\n", err)
 	}
@@ -91,7 +91,7 @@ func TestOptionAddrMixedSlice(t *testing.T) {
 	} else {
 		t.Log(result)
 	}
-	client.CreateStreamSession("")
+	client.CreateStreamSession(client.NewID(), "")
 	if err := client.Close(); err != nil {
 		t.Fatalf("client.Close() Error: %q\n", err)
 	}
@@ -126,7 +126,7 @@ func TestOptionHost(t *testing.T) {
 	} else {
 		t.Log(result)
 	}
-	client.CreateStreamSession("")
+	client.CreateStreamSession(client.NewID(), "")
 	if err := client.Close(); err != nil {
 		t.Fatalf("client.Close() Error: %q\n", err)
 	}
@@ -161,7 +161,7 @@ func TestOptionPortInt(t *testing.T) {
 	} else {
 		t.Log(result)
 	}
-	client.CreateStreamSession("")
+	client.CreateStreamSession(client.NewID(), "")
 	if err := client.Close(); err != nil {
 		t.Fatalf("client.Close() Error: %q\n", err)
 	}
