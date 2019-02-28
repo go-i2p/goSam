@@ -116,8 +116,6 @@ Client.NewClient() function. To add it to allOptions, it looks like this:
                 setid(c.id),
             )
         }
-}
-
 ```
 
 [example](https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/options.go#L333)
