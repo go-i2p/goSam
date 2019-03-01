@@ -1,3 +1,9 @@
+golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83ubuntu1+nmu2ubuntu1) bionic; urgency=medium
+
+  * only run the offline tests by default
+
+ -- idk <hankhill19580@gmail.com>  Thu, 28 Feb 2019 20:35:51 -0500
+
 golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83ubuntu1+nmu2) bionic; urgency=medium
 
   [ idk ]
@@ -5,7 +11,7 @@ golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83ubuntu1+nmu2) bionic; ur
   * incorporate cryptix-debug without the counter
   * fix module
 
- -- lair repo key <problemsolver@openmailbox.org>  Thu, 28 Feb 2019 20:02:33 -0500
+ -- idk <hankhill19580@gmail.com>  Thu, 28 Feb 2019 20:32:58 -0500
 
 golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83ubuntu1+nmu1) bionic; urgency=medium
 
