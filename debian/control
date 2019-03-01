@@ -5,19 +5,22 @@ Maintainer: idk <hankhill19580@gmail.com>
 Uploaders: idk <hankhill19580@gmail.com>
 Build-Depends: debhelper (>= 11),
                dh-golang,
-               golang-any
+               golang-any,
+               i2pd | i2p
 Standards-Version: 4.2.1
 Homepage: https://github.com/eyedeekay/gosam
 Vcs-Browser: https:/github.com/eyedeekay/gosam
 Vcs-Git: https://github.com/eyedeekay/gosam.git
 XS-Go-Import-Path: github.com/eyedeekay/gosam
 Testsuite: autopkgtest-pkg-go
+Launchpad-Bugs-Fixed: #1818159
 
 Package: golang-github-eyedeekay-gosam-dev
 Architecture: all
-Depends: ${misc:Depends}
-Description: A go library for using the I2P Simple Anonymous Messaging (SAM version 3.0) bridge
- goSam A go library for using the I2P (https://geti2p.net/en/)
- Simple Anonymous Messaging (SAM version 3.0
+Depends: ${misc:Depends},
+    i2pd | i2p
+Description: A go library for using the I2P (https://geti2p.net/en/)
+ Simple Anonymous Messaging (SAM version 3.1
  (https://geti2p.net/en/docs/api/samv3)) bridge
  .
+Launchpad-Bugs-Fixed: #1818159

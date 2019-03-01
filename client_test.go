@@ -1,3 +1,5 @@
+// +build nettest
+
 package goSam
 
 import "testing"

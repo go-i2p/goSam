@@ -1,4 +1,20 @@
-golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83) UNRELEASED; urgency=medium
+golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83ubuntu1+nmu2) bionic; urgency=medium
+
+  [ idk ]
+  * incorporate cryptix-debug without the counter
+  * incorporate cryptix-debug without the counter
+  * fix module
+
+ -- lair repo key <problemsolver@openmailbox.org>  Thu, 28 Feb 2019 20:02:33 -0500
+
+golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83ubuntu1+nmu1) bionic; urgency=medium
+
+  * add sid
+  *
+
+ -- idk <hankhill19580@gmail.com>  Thu, 28 Feb 2019 18:52:01 -0500
+
+golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83ubuntu1) bionic; urgency=medium
 
   [ idk ]
   * Update changelog for 0.1.0+git20190221.2896c83-1 release
@@ -14,4 +30,7 @@ golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83) UNRELEASED; urgency=me
   * remove 'commented-out' id
   * Initial release (Closes: TODO)
 
- -- idk <hankhill19580@gmail.com>  Sat, 23 Feb 2019 11:43:05 -0500
+  [ idk ]
+  * add bionic
+
+ -- idk <hankhill19580@gmail.com>  Thu, 28 Feb 2019 18:51:23 -0500
