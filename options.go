@@ -62,6 +62,15 @@ func SetHost(s string) func(*Client) error {
 	}
 }
 
+//SetLocalDestination sets the local destination of the tunnel from a private
+//key
+func SetLocalDestination(s string) func(*Client) error {
+	return func(c *Client) error {
+		c.destination = s
+		return nil
+	}
+}
+
 func setlastaddr(s string) func(*Client) error {
 	return func(c *Client) error {
 		c.lastaddr = s

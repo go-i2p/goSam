@@ -31,13 +31,11 @@ func (c *Client) DialContext(ctx context.Context, network, addr string) (net.Con
 }
 
 func (c Client) dialCheck(addr string) (int32, bool) {
-	fmt.Println("DIAL CHECK")
 	if c.lastaddr == "invalid" {
 		fmt.Println("Preparing to dial new address.")
 		return c.NewID(), true
 	}
-	fmt.Println("No new address to dial.")
-	return c.NewID(), false
+	return c.id, false
 }
 
 // Dial implements the net.Dial function and can be used for http.Transport
@@ -51,10 +49,9 @@ func (c *Client) Dial(network, addr string) (net.Conn, error) {
 		return nil, err
 	}
 
-	var id int32
 	var test bool
-	if id, test = c.dialCheck(addr); test == true {
-		c.destination, err = c.CreateStreamSession(id, "")
+	if c.id, test = c.dialCheck(addr); test == true {
+		c.destination, err = c.CreateStreamSession(c.id, c.destination)
 		if err != nil {
 			return nil, err
 		}
