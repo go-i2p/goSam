@@ -54,7 +54,7 @@ func (c *Client) Dial(network, addr string) (net.Conn, error) {
 	var id int32
 	var test bool
 	if id, test = c.dialCheck(addr); test == true {
-		c.destination, err = c.CreateStreamSession(id, "")
+		c.destination, err = c.CreateStreamSession(id, c.destination)
 		if err != nil {
 			return nil, err
 		}

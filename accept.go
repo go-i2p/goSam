@@ -12,7 +12,7 @@ func (c *Client) Accept() (net.Conn, error) {
 	var err error
 	var id int32
 	id = c.NewID()
-	c.destination, err = c.CreateStreamSession(id, "")
+	c.destination, err = c.CreateStreamSession(id, c.destination)
 	if err != nil {
 		return nil, err
 	}
