@@ -32,7 +32,7 @@ func (c *Client) DialContext(ctx context.Context, network, addr string) (net.Con
 
 func (c Client) dialCheck(addr string) (int32, bool) {
 	fmt.Println("DIAL CHECK")
-	if c.lastaddr != addr {
+	if c.lastaddr == "invalid" {
 		fmt.Println("Preparing to dial new address.")
 		return c.NewID(), true
 	}
@@ -54,21 +54,11 @@ func (c *Client) Dial(network, addr string) (net.Conn, error) {
 	var id int32
 	var test bool
 	if id, test = c.dialCheck(addr); test == true {
-		c.destination, err = c.CreateStreamSession(id, c.destination)
+		c.destination, err = c.CreateStreamSession(id, "")
 		if err != nil {
 			return nil, err
 		}
 		c.lastaddr = addr
-		c, err = c.NewClient()
-		if err != nil {
-			return nil, err
-		}
-
-		err = c.StreamConnect(id, addr)
-		if err != nil {
-			return nil, err
-		}
-		return c.SamConn, nil
 	}
 	c, err = c.NewClient()
 	if err != nil {

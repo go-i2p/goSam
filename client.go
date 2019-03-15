@@ -96,6 +96,7 @@ func NewClientFromOptions(opts ...func(*Client) error) (*Client, error) {
 	c.sigType = SAMsigTypes[4]
 	c.id = 0
 	c.lastaddr = "invalid"
+	c.destination = ""
 	for _, o := range opts {
 		if err := o(&c); err != nil {
 			return nil, err
@@ -120,7 +121,7 @@ func (c *Client) samaddr() string {
 
 // send the initial handshake command and check that the reply is ok
 func (c *Client) hello() error {
-	r, err := c.sendCmd("HELLO VERSION MIN=3.0 MAX=3.1\n")
+	r, err := c.sendCmd("HELLO VERSION MIN=3.0 MAX=3.2\n")
 	if err != nil {
 		return err
 	}
