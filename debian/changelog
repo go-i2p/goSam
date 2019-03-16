@@ -1,3 +1,9 @@
+golang-github-eyedeekay-gosam (0.1.1) bionic; urgency=medium
+
+  * Make something kind of stable.
+
+ -- idk <hankhill19580@gmail.com>  Thu, 28 Feb 2019 20:35:51 -0500
+
 golang-github-eyedeekay-gosam (0.1.0+git20190221.2896c83ubuntu1+nmu2ubuntu1) bionic; urgency=medium
 
   * only run the offline tests by default
