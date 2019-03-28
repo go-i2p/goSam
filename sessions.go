@@ -19,8 +19,10 @@ func (c *Client) CreateStreamSession(id int32, dest string) (string, error) {
 	}
 	c.id = id
 	r, err := c.sendCmd(
-		"SESSION CREATE STYLE=STREAM ID=%d DESTINATION=%s %s %s\n",
+		"SESSION CREATE STYLE=STREAM ID=%d %s %s DESTINATION=%s %s %s\n",
 		c.id,
+        c.from(),
+        c.to(),
 		dest,
 		c.sigtype(),
 		c.allOptions(),

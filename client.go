@@ -21,6 +21,9 @@ type Client struct {
 	sigType     string
 	destination string
 
+    fromport string
+    toport string
+
 	inLength   uint
 	inVariance int
 	inQuantity uint
@@ -97,6 +100,8 @@ func NewClientFromOptions(opts ...func(*Client) error) (*Client, error) {
 	c.id = 0
 	c.lastaddr = "invalid"
 	c.destination = ""
+    c.fromport = "0"
+    c.toport = "0"
 	for _, o := range opts {
 		if err := o(&c); err != nil {
 			return nil, err
