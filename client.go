@@ -2,15 +2,15 @@ package goSam
 
 import (
 	"bufio"
-	"crypto/sha256"
+    "crypto/sha256"
+    "encoding/binary"
 	"encoding/base32"
 	"encoding/base64"
-	"encoding/binary"
 	"fmt"
 	"math"
 	"math/rand"
 	"net"
-	"strings"
+    "strings"
 
 	"github.com/eyedeekay/gosam/debug"
 )
@@ -89,15 +89,15 @@ func (c *Client) Destination() string {
 
 // Base32 returns the base32 of the local tunnel
 func (c *Client) Base32() string {
-	hash := sha256.New()
-	hash.Write([]byte(c.base64()))
+    hash := sha256.New()
+    hash.Write([]byte(c.base64()))
 	return strings.ToLower(strings.Replace(i2pB32enc.EncodeToString(hash.Sum(nil)), "=", "", -1))
 }
 
 func (c *Client) base64() []byte {
 	s, _ := i2pB64enc.DecodeString(c.destination)
-	alen := binary.BigEndian.Uint16(s[385:387])
-	return s[:387+alen]
+    alen := binary.BigEndian.Uint16(s[385:387])
+    return s[:387+alen]
 }
 
 // Base64 returns the base64 of the local tunnel

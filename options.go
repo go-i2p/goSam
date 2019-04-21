@@ -111,6 +111,59 @@ func SetPortInt(i int) func(*Client) error {
 	}
 }
 
+//SetFromPort sets the port of the client's SAM bridge using a string
+func SetFromPort(s string) func(*Client) error {
+	return func(c *Client) error {
+		port, err := strconv.Atoi(s)
+		if err != nil {
+			return fmt.Errorf("Invalid port; non-number")
+		}
+		if port < 65536 && port > -1 {
+			c.fromport = s
+			return nil
+		}
+		return fmt.Errorf("Invalid port")
+	}
+}
+
+//SetFromPortInt sets the port of the client's SAM bridge using a string
+func SetFromPortInt(i int) func(*Client) error {
+	return func(c *Client) error {
+		if i < 65536 && i > -1 {
+			c.fromport = strconv.Itoa(i)
+			return nil
+		}
+		return fmt.Errorf("Invalid port")
+	}
+}
+
+//SetToPort sets the port of the client's SAM bridge using a string
+func SetToPort(s string) func(*Client) error {
+	return func(c *Client) error {
+		port, err := strconv.Atoi(s)
+		if err != nil {
+			return fmt.Errorf("Invalid port; non-number")
+		}
+		if port < 65536 && port > -1 {
+			c.toport = s
+			return nil
+		}
+		return fmt.Errorf("Invalid port")
+	}
+}
+
+//SetToPortInt sets the port of the client's SAM bridge using a string
+func SetToPortInt(i int) func(*Client) error {
+	return func(c *Client) error {
+		if i < 65536 && i > -1 {
+			c.fromport = strconv.Itoa(i)
+			return nil
+		}
+		return fmt.Errorf("Invalid port")
+	}
+}
+
+
 //SetDebug enables debugging messages
 func SetDebug(b bool) func(*Client) error {
 	return func(c *Client) error {
@@ -304,6 +357,17 @@ func SetSignatureType(s string) func(*Client) error {
 		}
 		return fmt.Errorf("Invalid signature type specified at construction time")
 	}
+}
+
+//return the from port as a string.
+func (c *Client) from() string {
+	return fmt.Sprintf(" FROM_PORT=%v ", c.fromport)
+}
+
+
+//return the to port as a string.
+func (c *Client) to() string {
+	return fmt.Sprintf(" TO_PORT=%v ", c.toport)
 }
 
 //return the signature type as a string.
