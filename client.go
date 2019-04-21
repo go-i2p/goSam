@@ -19,6 +19,8 @@ import (
 type Client struct {
 	host string
 	port string
+    fromport string
+    toport string
 
 	SamConn net.Conn
 	rd      *bufio.Reader
