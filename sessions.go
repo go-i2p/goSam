@@ -38,6 +38,6 @@ func (c *Client) CreateStreamSession(id int32, dest string) (string, error) {
 	if result != "OK" {
 		return "", ReplyError{ResultKeyNotFound, r}
 	}
-
-	return r.Pairs["DESTINATION"], nil
+	c.destination = r.Pairs["DESTINATION"]
+	return c.destination, nil
 }

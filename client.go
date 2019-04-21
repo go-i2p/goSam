@@ -2,10 +2,15 @@ package goSam
 
 import (
 	"bufio"
+	"crypto/sha256"
+	"encoding/base32"
+	"encoding/base64"
+	"encoding/binary"
 	"fmt"
 	"math"
 	"math/rand"
 	"net"
+	"strings"
 
 	"github.com/eyedeekay/gosam/debug"
 )
@@ -57,6 +62,11 @@ var SAMsigTypes = []string{
 	"SIGNATURE_TYPE=EdDSA_SHA512_Ed25519",
 }
 
+var (
+	i2pB64enc *base64.Encoding = base64.NewEncoding("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-~")
+	i2pB32enc *base32.Encoding = base32.NewEncoding("abcdefghijklmnopqrstuvwxyz234567")
+)
+
 // NewDefaultClient creates a new client, connecting to the default host:port at localhost:7656
 func NewDefaultClient() (*Client, error) {
 	return NewClient("localhost:7656")
@@ -70,6 +80,29 @@ func NewClient(addr string) (*Client, error) {
 // NewID generates a random number to use as an tunnel name
 func (c *Client) NewID() int32 {
 	return rand.Int31n(math.MaxInt32)
+}
+
+// Destination returns the full destination of the local tunnel
+func (c *Client) Destination() string {
+	return c.destination
+}
+
+// Base32 returns the base32 of the local tunnel
+func (c *Client) Base32() string {
+	hash := sha256.New()
+	hash.Write([]byte(c.base64()))
+	return strings.ToLower(strings.Replace(i2pB32enc.EncodeToString(hash.Sum(nil)), "=", "", -1))
+}
+
+func (c *Client) base64() []byte {
+	s, _ := i2pB64enc.DecodeString(c.destination)
+	alen := binary.BigEndian.Uint16(s[385:387])
+	return s[:387+alen]
+}
+
+// Base64 returns the base64 of the local tunnel
+func (c *Client) Base64() string {
+	return i2pB64enc.EncodeToString(c.base64())
 }
 
 // NewClientFromOptions creates a new client, connecting to a specified port

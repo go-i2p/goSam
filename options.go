@@ -417,3 +417,23 @@ func (c *Client) allOptions() string {
 		c.closeidletime() +
 		c.compresion()
 }
+
+//Print return all options as string
+func (c *Client) Print() string {
+	return c.inlength() +
+		c.outlength() +
+		c.invariance() +
+		c.outvariance() +
+		c.inquantity() +
+		c.outquantity() +
+		c.inbackups() +
+		c.outbackups() +
+		c.dontpublishlease() +
+		c.encryptlease() +
+		c.reduceonidle() +
+		c.reduceidletime() +
+		c.reduceidlecount() +
+		c.closeonidle() +
+		c.closeidletime() +
+		c.compresion()
+}
