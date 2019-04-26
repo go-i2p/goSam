@@ -163,7 +163,6 @@ func SetToPortInt(i int) func(*Client) error {
 	}
 }
 
-
 //SetDebug enables debugging messages
 func SetDebug(b bool) func(*Client) error {
 	return func(c *Client) error {
@@ -363,7 +362,6 @@ func SetSignatureType(s string) func(*Client) error {
 func (c *Client) from() string {
 	return fmt.Sprintf(" FROM_PORT=%v ", c.fromport)
 }
-
 
 //return the to port as a string.
 func (c *Client) to() string {
