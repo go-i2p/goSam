@@ -286,7 +286,7 @@ func SetReduceIdle(b bool) func(*Client) error {
 //SetReduceIdleTime sets time to wait before the tunnel quantity is reduced
 func SetReduceIdleTime(u uint) func(*Client) error {
 	return func(c *Client) error {
-		if u > 300000 {
+		if u > 299999 {
 			c.reduceIdleTime = u
 			return nil
 		}
@@ -316,7 +316,7 @@ func SetCloseIdle(b bool) func(*Client) error {
 //SetCloseIdleTime sets the time in milliseconds to wait before closing tunnels
 func SetCloseIdleTime(u uint) func(*Client) error {
 	return func(c *Client) error {
-		if u > 300000 {
+		if u > 299999 {
 			c.closeIdleTime = u
 			return nil
 		}
