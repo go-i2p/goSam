@@ -92,11 +92,11 @@ func (c *Client) Destination() string {
 // Base32 returns the base32 of the local tunnel
 func (c *Client) Base32() string {
 	hash := sha256.New()
-    b64, err := i2pB64enc.DecodeString(c.Base64())
+	b64, err := i2pB64enc.DecodeString(c.Base64())
 	if err != nil {
 		return ""
 	}
-    hash.Write([]byte(b64))
+	hash.Write([]byte(b64))
 	return strings.ToLower(strings.Replace(i2pB32enc.EncodeToString(hash.Sum(nil)), "=", "", -1))
 }
 
