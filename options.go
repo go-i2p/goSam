@@ -360,11 +360,17 @@ func SetSignatureType(s string) func(*Client) error {
 
 //return the from port as a string.
 func (c *Client) from() string {
+	if c.fromport == "" {
+		return ""
+	}
 	return fmt.Sprintf(" FROM_PORT=%v ", c.fromport)
 }
 
 //return the to port as a string.
 func (c *Client) to() string {
+	if c.toport == "" {
+		return ""
+	}
 	return fmt.Sprintf(" TO_PORT=%v ", c.toport)
 }
 
