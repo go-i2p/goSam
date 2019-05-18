@@ -70,6 +70,21 @@ func checkErr(err error) {
 }
 ```
 
+### .deb package
+
+A package for installing this on Debian is buildable, and a version for Ubuntu
+is available as a PPA and mirrored via i2p. To build the deb package, from the
+root of this repository with the build dependencies installed(git, i2p, go,
+debuild) run the command
+
+        debuild -us -uc
+
+to produce an unsigned deb for personal use only. For packagers,
+
+        debuild -S
+
+will produce a viable source package for use with Launchpad PPA's and other
+similar systems.
 ### TODO
 
 * Implement `STREAM ACCEPT` and `STREAM FORWARD`

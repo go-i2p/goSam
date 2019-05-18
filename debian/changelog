@@ -1,3 +1,11 @@
+golang-github-eyedeekay-gosam (0.3.2.0) bionic; urgency=medium
+
+  * Enable persistent destinations
+  * Make Base32 and Base64 addresses retrievable from client
+  * bug fixes
+
+ -- idk <hankhill19580@gmail.com>  Fri, 18 May 2019 18:12:21 -0500
+
 golang-github-eyedeekay-gosam (0.1.1) bionic; urgency=medium
 
   * Incorporate all the recent bug-fixes and improvements and stabilize.
