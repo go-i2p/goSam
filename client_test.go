@@ -14,7 +14,6 @@ func setup(t *testing.T) {
 	if err != nil {
 		t.Fatalf("NewDefaultClient() Error: %q\n", err)
 	}
-
 }
 
 func teardown(t *testing.T) {
@@ -25,5 +24,6 @@ func teardown(t *testing.T) {
 
 func TestClientHello(t *testing.T) {
 	setup(t)
+	t.Log(client.Base32())
 	teardown(t)
 }

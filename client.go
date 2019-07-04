@@ -101,9 +101,12 @@ func (c *Client) Base32() string {
 }
 
 func (c *Client) base64() []byte {
-	s, _ := i2pB64enc.DecodeString(c.destination)
-	alen := binary.BigEndian.Uint16(s[385:387])
-	return s[:387+alen]
+	if c.destination != "" {
+		s, _ := i2pB64enc.DecodeString(c.destination)
+		alen := binary.BigEndian.Uint16(s[385:387])
+		return s[:387+alen]
+	}
+	return []byte("")
 }
 
 // Base64 returns the base64 of the local tunnel
