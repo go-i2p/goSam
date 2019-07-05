@@ -7,11 +7,21 @@ import (
 	"github.com/eyedeekay/gosam/debug"
 )
 
-// Accept creates a new Client and accepts a connection on it
-func (c *Client) Accept() (net.Conn, error) {
+// AcceptI2P creates a new Client and accepts a connection on it
+func (c *Client) AcceptI2P() (net.Conn, error) {
+	listener, err := c.Listen()
+	if err != nil {
+		return nil, err
+	}
+	return listener.Accept()
+}
+
+// Listen creates a new Client and returns a net.listener which *must* be started
+// with Accept
+func (c *Client) Listen() (net.Listener, error) {
 	var err error
 	var id int32
-	id = c.NewID()
+	c.id = c.NewID()
 	c.destination, err = c.CreateStreamSession(id, c.destination)
 	if err != nil {
 		return nil, err
@@ -28,7 +38,17 @@ func (c *Client) Accept() (net.Conn, error) {
 		c.SamConn = debug.WrapConn(c.SamConn)
 	}
 
-	resp, err := c.StreamAccept(id)
+	return c, nil
+}
+
+// Accept accepts a connection on a listening goSam.Client(Implements net.Listener)
+// or, if the connection isn't listening yet, just calls AcceptI2P for compatibility
+// with older versions.
+func (c *Client) Accept() (net.Conn, error) {
+	if c.id == 0 {
+		return c.AcceptI2P()
+	}
+	resp, err := c.StreamAccept(c.id)
 	if err != nil {
 		return nil, err
 	}

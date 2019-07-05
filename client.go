@@ -160,6 +160,10 @@ func (p *Client) ID() string {
 	return fmt.Sprintf("%d", p.id)
 }
 
+func (p *Client) Addr() net.Addr {
+	return nil
+}
+
 //return the combined host:port of the SAM bridge
 func (c *Client) samaddr() string {
 	return fmt.Sprintf("%s:%s", c.host, c.port)
