@@ -19,10 +19,16 @@ func (c *Client) AcceptI2P() (net.Conn, error) {
 // Listen creates a new Client and returns a net.listener which *must* be started
 // with Accept
 func (c *Client) Listen() (net.Listener, error) {
+	return c.ListenI2P(c.destination)
+}
+
+// ListenI2P creates a new Client and returns a net.listener which *must* be started
+// with Accept
+func (c *Client) ListenI2P(dest string) (net.Listener, error) {
 	var err error
 	var id int32
 	c.id = c.NewID()
-	c.destination, err = c.CreateStreamSession(id, c.destination)
+	c.destination, err = c.CreateStreamSession(id, dest)
 	if err != nil {
 		return nil, err
 	}
