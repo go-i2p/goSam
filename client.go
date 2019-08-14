@@ -12,7 +12,7 @@ import (
 	"net"
 	"strings"
 
-	"github.com/eyedeekay/gosam/debug"
+	"github.com/eyedeekay/goSam/debug"
 )
 
 // A Client represents a single Connection to the SAM bridge

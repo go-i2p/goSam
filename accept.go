@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/eyedeekay/gosam/debug"
+	"github.com/eyedeekay/goSam/debug"
 )
 
 // AcceptI2P creates a new Client and accepts a connection on it
