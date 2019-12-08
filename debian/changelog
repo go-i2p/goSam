@@ -1,3 +1,9 @@
+golang-github-eyedeekay-gosam (0.3.2.1) bionic; urgency=medium
+
+  * Get rid of the debug directory, just move it into the source
+
+ -- idk <hankhill19580@gmail.com>  Fri, 18 May 2019 18:12:21 -0500
+
 golang-github-eyedeekay-gosam (0.3.2.0) bionic; urgency=medium
 
   * Enable persistent destinations

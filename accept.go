@@ -3,8 +3,6 @@ package goSam
 import (
 	"fmt"
 	"net"
-
-	"github.com/eyedeekay/goSam/debug"
 )
 
 // AcceptI2P creates a new Client and accepts a connection on it
@@ -41,7 +39,7 @@ func (c *Client) ListenI2P(dest string) (net.Listener, error) {
 	}
 
 	if c.debug {
-		c.SamConn = debug.WrapConn(c.SamConn)
+		c.SamConn = WrapConn(c.SamConn)
 	}
 
 	return c, nil

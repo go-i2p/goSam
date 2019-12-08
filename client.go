@@ -11,8 +11,6 @@ import (
 	"math/rand"
 	"net"
 	"strings"
-
-	"github.com/eyedeekay/goSam/debug"
 )
 
 // A Client represents a single Connection to the SAM bridge
@@ -149,7 +147,7 @@ func NewClientFromOptions(opts ...func(*Client) error) (*Client, error) {
 		return nil, err
 	}
 	if c.debug {
-		conn = debug.WrapConn(conn)
+		conn = WrapConn(conn)
 	}
 	c.SamConn = conn
 	c.rd = bufio.NewReader(conn)
