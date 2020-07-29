@@ -6,7 +6,8 @@ Uploaders: idk <hankhill19580@gmail.com>
 Build-Depends: debhelper (>= 11),
                dh-golang,
                golang-any,
-               i2pd | i2p
+               i2pd | i2p,
+               git,
 Standards-Version: 4.2.1
 Homepage: https://github.com/eyedeekay/gosam
 Vcs-Browser: https:/github.com/eyedeekay/gosam

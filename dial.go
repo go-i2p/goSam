@@ -34,6 +34,9 @@ func (c Client) dialCheck(addr string) (int32, bool) {
 	if c.lastaddr == "invalid" {
 		fmt.Println("Preparing to dial new address.")
 		return c.NewID(), true
+	} else if c.lastaddr != addr {
+		fmt.Println("Preparing to dial next new address.")
+		return c.NewID(), true
 	}
 	return c.id, false
 }
