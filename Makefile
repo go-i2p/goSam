@@ -18,3 +18,7 @@ tar:
 		--exclude bin \
 		--exclude examples \
 		-cJvf ../$(packagename)_$(VERSION).orig.tar.xz .
+
+link:
+	rm -f ../goSam
+	ln -sf . ../goSam
