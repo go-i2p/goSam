@@ -1,6 +1,6 @@
 
 USER_GH=eyedeekay
-VERSION=0.32.22
+VERSION=0.32.23
 packagename=gosam
 
 echo:
