@@ -1,7 +1,12 @@
-golang-github-eyedeekay-gosam (0.32.23) bionic; urgency=medium
+golang-github-eyedeekay-gosam (0.32.24) UNRELEASED; urgency=medium
 
-  * Get rid of the debug directory, just move it into the source
-  * Get rid of the old example, just use the one in the README
+  * Improve the mutex thingy
+
+ -- idk <hankhill19580@gmail.com>  Tue, 25 Aug 2020 04:52:11 -0500
+  
+golang-github-eyedeekay-gosam (0.32.23) UNRELEASED; urgency=medium
+
+  * Protect Dial with a mutex to fix a lookup bug
 
  -- idk <hankhill19580@gmail.com>  Tue, 25 Aug 2020 10:29:26 -0500
 

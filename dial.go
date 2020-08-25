@@ -44,13 +44,13 @@ func (c Client) dialCheck(addr string) (int32, bool) {
 // Dial implements the net.Dial function and can be used for http.Transport
 func (c *Client) Dial(network, addr string) (net.Conn, error) {
 	c.ml.Lock()
+	defer c.ml.Unlock()
 	portIdx := strings.Index(addr, ":")
 	if portIdx >= 0 {
 		addr = addr[:portIdx]
 	}
 	addr, err := c.Lookup(addr)
 	if err != nil {
-		c.ml.Unlock()
 		return nil, err
 	}
 
@@ -58,22 +58,18 @@ func (c *Client) Dial(network, addr string) (net.Conn, error) {
 	if c.id, test = c.dialCheck(addr); test == true {
 		c.destination, err = c.CreateStreamSession(c.id, c.destination)
 		if err != nil {
-			c.ml.Unlock()
 			return nil, err
 		}
 		c.lastaddr = addr
 	}
 	c, err = c.NewClient()
 	if err != nil {
-		c.ml.Unlock()
 		return nil, err
 	}
 
 	err = c.StreamConnect(c.id, addr)
 	if err != nil {
-		c.ml.Unlock()
 		return nil, err
 	}
-	c.ml.Unlock()
 	return c.SamConn, nil
 }
