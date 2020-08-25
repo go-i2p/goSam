@@ -11,6 +11,7 @@ import (
 	"math/rand"
 	"net"
 	"strings"
+	"sync"
 )
 
 // A Client represents a single Connection to the SAM bridge
@@ -52,6 +53,7 @@ type Client struct {
 	//NEVER, EVER modify lastaddr or id yourself. They are used internally only.
 	lastaddr string
 	id       int32
+	ml       sync.Mutex
 }
 
 var SAMsigTypes = []string{
