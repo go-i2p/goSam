@@ -27,3 +27,10 @@ func TestClientHello(t *testing.T) {
 	t.Log(client.Base32())
 	teardown(t)
 }
+
+func TestNewDestination(t *testing.T) {
+	setup(t)
+	t.Log(client.Base32())
+	client.NewDestination(SAMsigTypes[3])
+	teardown(t)
+}
