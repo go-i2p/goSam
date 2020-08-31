@@ -30,7 +30,7 @@ func (c *Client) DialContext(ctx context.Context, network, addr string) (net.Con
 	}
 }
 
-func (c Client) dialCheck(addr string) (int32, bool) {
+func (c *Client) dialCheck(addr string) (int32, bool) {
 	if c.lastaddr == "invalid" {
 		fmt.Println("Preparing to dial new address.")
 		return c.NewID(), true
