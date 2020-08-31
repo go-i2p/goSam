@@ -31,6 +31,8 @@ func TestClientHello(t *testing.T) {
 func TestNewDestination(t *testing.T) {
 	setup(t)
 	t.Log(client.Base32())
-	client.NewDestination(SAMsigTypes[3])
+	if _, err := client.NewDestination(SAMsigTypes[3]); err != nil {
+		t.Error(err)
+	}
 	teardown(t)
 }
