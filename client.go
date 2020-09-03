@@ -39,6 +39,7 @@ type Client struct {
 
 	dontPublishLease bool
 	encryptLease     bool
+	leaseSetEncType  string
 
 	reduceIdle         bool
 	reduceIdleTime     uint
@@ -139,6 +140,7 @@ func NewClientFromOptions(opts ...func(*Client) error) (*Client, error) {
 	c.id = 0
 	c.lastaddr = "invalid"
 	c.destination = ""
+	c.leaseSetEncType = "4,0"
 	for _, o := range opts {
 		if err := o(&c); err != nil {
 			return nil, err
