@@ -275,7 +275,8 @@ func SetEncrypt(b bool) func(*Client) error {
 	}
 }
 
-//SetLeaseSetEncType tells the router to use an encrypted leaseset
+//SetLeaseSetEncType tells the router to use an encrypted leaseset of a specific type.
+//defaults to 4,0
 func SetLeaseSetEncType(b string) func(*Client) error {
 	return func(c *Client) error {
 		c.leaseSetEncType = b
