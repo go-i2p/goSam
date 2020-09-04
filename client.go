@@ -106,7 +106,6 @@ func (c *Client) Base32() string {
 }
 
 func (c *Client) base64() []byte {
-	fmt.Println("\n\nDESTINATION", c.destination, "\n\n.")
 	if c.destination != "" {
 		s, _ := i2pB64enc.DecodeString(c.destination)
 		alen := binary.BigEndian.Uint16(s[385:387])
