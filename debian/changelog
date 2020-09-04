@@ -1,3 +1,9 @@
+golang-github-eyedeekay-gosam (0.32.26) UNRELEASED; urgency=medium
+
+  * Fix mistaken-identity issue with listeners
+
+ -- idk <hankhill19580@gmail.com>  Thu, 03 Sept 2020 08:17:40 -0500
+
 golang-github-eyedeekay-gosam (0.32.25) UNRELEASED; urgency=medium
 
   * Support dual-keys by default in all future versions
