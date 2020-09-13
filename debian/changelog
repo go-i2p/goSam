@@ -1,3 +1,9 @@
+golang-github-eyedeekay-gosam (0.32.27) UNRELEASED; urgency=medium
+
+  * Add a Resolve function to fulfill SOCKS5 proxy requirements
+
+ -- idk <hankhill19580@gmail.com>  Sun, 13 Sept 2020 04:48:27 -0500
+
 golang-github-eyedeekay-gosam (0.32.26) UNRELEASED; urgency=medium
 
   * Fix mistaken-identity issue with listeners
