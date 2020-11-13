@@ -9,6 +9,8 @@ import (
 	"time"
 	//"log"
 	"net/http"
+
+	"github.com/eyedeekay/sam3"
 )
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
@@ -28,17 +30,24 @@ func setup(t *testing.T) {
 }
 
 func TestCompositeClient(t *testing.T) {
-	server, err := NewClientFromOptions(SetDebug(true))
+	sam, err := sam3.NewSAM("127.0.0.1:7656")
 	if err != nil {
-		t.Fatalf("NewDefaultClient() Error: %q\n", err)
+		t.Fatalf("Listener() Error: %q\n", err)
 	}
-	listener, err := server.Listen()
+	keys, err := sam.NewKeys()
+	if err != nil {
+		t.Fatalf("Listener() Error: %q\n", err)
+	}
+	stream, err := sam.NewStreamSession("serverTun", keys, sam3.Options_Medium)
+	if err != nil {
+		t.Fatalf("Listener() Error: %q\n", err)
+	}
+	listener, err := stream.Listen()
 	if err != nil {
 		t.Fatalf("Listener() Error: %q\n", err)
 	}
 	http.HandleFunc("/", HelloServer)
 	go http.Serve(listener, nil)
-	time.Sleep(time.Second * 15)
 
 	client, err = NewClientFromOptions(SetDebug(true))
 	if err != nil {
@@ -48,7 +57,8 @@ func TestCompositeClient(t *testing.T) {
 		Dial: client.Dial,
 	}
 	client := &http.Client{Transport: tr}
-	resp, err := client.Get("http://" + server.Base32() + ".b32.i2p")
+	time.Sleep(time.Second * 30)
+	resp, err := client.Get("http://" + keys.Addr().Base32())
 	if err != nil {
 		t.Fatalf("Get Error: %q\n", err)
 	}
