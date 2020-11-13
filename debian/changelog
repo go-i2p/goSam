@@ -1,5 +1,11 @@
 golang-github-eyedeekay-gosam (0.32.27) UNRELEASED; urgency=medium
 
+  * Maintenance updates
+
+ -- idk <hankhill19580@gmail.com>  Thu, 12 Sept 2020 22:44:27 -0500
+
+golang-github-eyedeekay-gosam (0.32.27) UNRELEASED; urgency=medium
+
   * Add a Resolve function to fulfill SOCKS5 proxy requirements
 
  -- idk <hankhill19580@gmail.com>  Sun, 13 Sept 2020 04:48:27 -0500
