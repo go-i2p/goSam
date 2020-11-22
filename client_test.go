@@ -10,7 +10,8 @@ import (
 	//"log"
 	"net/http"
 
-	"github.com/eyedeekay/sam3"
+	"github.com/eyedeekay/sam3/helper"
+	"github.com/eyedeekay/sam3/i2pkeys"
 )
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
@@ -30,24 +31,26 @@ func setup(t *testing.T) {
 }
 
 func TestCompositeClient(t *testing.T) {
-	sam, err := sam3.NewSAM("127.0.0.1:7656")
-	if err != nil {
-		t.Fatalf("Listener() Error: %q\n", err)
-	}
-	keys, err := sam.NewKeys()
-	if err != nil {
-		t.Fatalf("Listener() Error: %q\n", err)
-	}
-	stream, err := sam.NewStreamSession("serverTun", keys, sam3.Options_Medium)
-	if err != nil {
-		t.Fatalf("Listener() Error: %q\n", err)
-	}
-	listener, err := stream.Listen()
+	listener, err := sam.I2PListener("testservice", "127.0.0.1:7656", "testkeys")
 	if err != nil {
 		t.Fatalf("Listener() Error: %q\n", err)
 	}
 	http.HandleFunc("/", HelloServer)
 	go http.Serve(listener, nil)
+
+	listener2, err := sam.I2PListener("testservice2", "127.0.0.1:7656", "testkeys2")
+	if err != nil {
+		t.Fatalf("Listener() Error: %q\n", err)
+	}
+	//	http.HandleFunc("/", HelloServer)
+	go http.Serve(listener2, nil)
+
+	listener3, err := sam.I2PListener("testservice3", "127.0.0.1:7656", "testkeys3")
+	if err != nil {
+		t.Fatalf("Listener() Error: %q\n", err)
+	}
+	//	http.HandleFunc("/", HelloServer)
+	go http.Serve(listener3, nil)
 
 	client, err = NewClientFromOptions(SetDebug(true))
 	if err != nil {
@@ -58,12 +61,31 @@ func TestCompositeClient(t *testing.T) {
 	}
 	client := &http.Client{Transport: tr}
 	time.Sleep(time.Second * 30)
-	resp, err := client.Get("http://" + keys.Addr().Base32())
-	if err != nil {
-		t.Fatalf("Get Error: %q\n", err)
-	}
-	defer resp.Body.Close()
-	t.Log("Get returned ", resp)
+	go func() {
+		resp, err := client.Get("http://" + listener.Addr().(i2pkeys.I2PAddr).Base32())
+		if err != nil {
+			t.Fatalf("Get Error: %q\n", err)
+		}
+		defer resp.Body.Close()
+		t.Log("Get returned ", resp)
+	}()
+	go func() {
+		resp, err := client.Get("http://" + listener2.Addr().(i2pkeys.I2PAddr).Base32())
+		if err != nil {
+			t.Fatalf("Get Error: %q\n", err)
+		}
+		defer resp.Body.Close()
+		t.Log("Get returned ", resp)
+	}()
+	go func() {
+		resp, err := client.Get("http://" + listener3.Addr().(i2pkeys.I2PAddr).Base32())
+		if err != nil {
+			t.Fatalf("Get Error: %q\n", err)
+		}
+		defer resp.Body.Close()
+		t.Log("Get returned ", resp)
+	}()
+
 	time.Sleep(time.Second * 15)
 }
 

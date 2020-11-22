@@ -2,3 +2,6 @@ github.com/eyedeekay/ramp v0.0.0-20190429201811-305b382042ab h1:EfTRHxGSbiaEyxNz
 github.com/eyedeekay/ramp v0.0.0-20190429201811-305b382042ab/go.mod h1:h7mvUAMgZ/rtRDUOkvKTK+8LnDMeUhJSoa5EPdB51fc=
 github.com/eyedeekay/sam3 v0.32.2 h1:xODDY5nBVg0oK7KaYk7ofkXFoHPsmI1umhSv1TZlS7s=
 github.com/eyedeekay/sam3 v0.32.2/go.mod h1:Y3igFVzN4ybqkkpfUWULGhw7WRp8lieq0ORXbLBbcZM=
+github.com/eyedeekay/sam3 v0.32.31 h1:0fdDAupEQZSETHcyVQAsnFgpYArGJzU+lC2qN6f0GDk=
+github.com/eyedeekay/sam3 v0.32.32-0.20201122050855-f464873c9350 h1:8R4zcaWsgANiZ4MKKBPUf9Isct2M1IFVUVZdAMqPCmU=
+github.com/eyedeekay/sam3 v0.32.32-0.20201122050855-f464873c9350/go.mod h1:qRA9KIIVxbrHlkj+ZB+OoxFGFgdKeGp1vSgPw26eOVU=
