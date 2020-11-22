@@ -26,7 +26,7 @@ func (c *Client) DialContext(ctx context.Context, network, addr string) (net.Con
 	}()
 	select {
 	case err := <-errCh:
-//		var err error
+		//		var err error
 		c, err = c.NewClient()
 		return c.SamConn, err
 	case conn := <-connCh:
