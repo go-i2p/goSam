@@ -5,7 +5,8 @@ A go library for using the [I2P](https://geti2p.net/en/) Simple Anonymous
 Messaging ([SAM version 3.0](https://geti2p.net/en/docs/api/samv3)) bridge. It
 has support for all streaming features SAM version 3.2.
 
-This is widely used and easy to use, but thusfar, mostly by me.
+This is widely used and easy to use, but thusfar, mostly by me. It sees a lot of
+testing and no breaking changes to the API are expected.
 
 ## Installation
 ```
@@ -70,6 +71,10 @@ func checkErr(err error) {
 ```
 
 ## Using it as a SOCKS proxy
+
+`client` also implements a resolver compatible with
+[`getlantern/go-socks5`](https://github.com/getlantern/go-socks5),
+making it very easy to implement a SOCKS5 server.
 
 ```go
 package main
