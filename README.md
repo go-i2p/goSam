@@ -3,10 +3,9 @@ goSam
 
 A go library for using the [I2P](https://geti2p.net/en/) Simple Anonymous
 Messaging ([SAM version 3.0](https://geti2p.net/en/docs/api/samv3)) bridge. It
-has support for SAM version 3.1 signature types.
+has support for all streaming features SAM version 3.2.
 
-This is in an **early development stage**. I would love to hear about any
-issues or ideas for improvement.
+This is widely used and easy to use, but thusfar, mostly by me.
 
 ## Installation
 ```
