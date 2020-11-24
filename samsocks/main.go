@@ -1,7 +1,7 @@
 package main
 
 import (
-  "flag"
+	"flag"
 
 	"github.com/eyedeekay/goSam"
 	"github.com/getlantern/go-socks5"
@@ -9,8 +9,8 @@ import (
 )
 
 var (
-  samaddr = flag.String("sam", "127.0.0.1:7656", "SAM API address to use")
-  socksaddr = flag.String("socks", "127.0.0.1:7675", "SOCKS address to use")
+	samaddr   = flag.String("sam", "127.0.0.1:7656", "SAM API address to use")
+	socksaddr = flag.String("socks", "127.0.0.1:7675", "SOCKS address to use")
 )
 
 func main() {
