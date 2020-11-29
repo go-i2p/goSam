@@ -144,7 +144,7 @@ func NewClientFromOptions(opts ...func(*Client) error) (*Client, error) {
 	c.reduceIdleQuantity = 1
 	c.closeIdle = true
 	c.closeIdleTime = 60000000
-	c.debug = true
+	c.debug = false
 	c.sigType = SAMsigTypes[4]
 	c.id = 0
 	c.lastaddr = "invalid"

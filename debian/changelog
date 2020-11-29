@@ -1,10 +1,19 @@
+golang-github-eyedeekay-gosam (0.32.30) UNRELEASED; urgency=medium
+
+  * Improve the defaults
+  * Handle errors more correctly
+  * Gracefully handle hangups by creating a new session
+  * Set empty destinations to TRANSIENT when dialing
+
+ -- idk <hankhill19580@gmail.com>  Sun, 03 Nov 2020 16:12:04 -0500
+
 golang-github-eyedeekay-gosam (0.32.29) UNRELEASED; urgency=medium
 
   * Maintenance updates
 
- -- idk <hankhill19580@gmail.com>  Mon, 23 Nov 2020 20:40:4 -0500
+ -- idk <hankhill19580@gmail.com>  Mon, 23 Nov 2020 20:40:40 -0500
 
-golang-github-eyedeekay-gosam (0.32.27) UNRELEASED; urgency=medium
+golang-github-eyedeekay-gosam (0.32.28) UNRELEASED; urgency=medium
 
   * Maintenance updates
 
