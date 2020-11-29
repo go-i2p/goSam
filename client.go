@@ -12,6 +12,7 @@ import (
 	"net"
 	"strings"
 	"sync"
+	"time"
 )
 
 // A Client represents a single Connection to the SAM bridge
@@ -83,7 +84,10 @@ func NewClient(addr string) (*Client, error) {
 
 // NewID generates a random number to use as an tunnel name
 func (c *Client) NewID() int32 {
-	return rand.Int31n(math.MaxInt32)
+	if c.id == 0 {
+		c.id = rand.Int31n(math.MaxInt32)
+	}
+	return c.id
 }
 
 // Destination returns the full destination of the local tunnel
@@ -127,11 +131,11 @@ func NewClientFromOptions(opts ...func(*Client) error) (*Client, error) {
 	c.port = "7656"
 	c.inLength = 3
 	c.inVariance = 0
-	c.inQuantity = 1
+	c.inQuantity = 3
 	c.inBackups = 1
 	c.outLength = 3
 	c.outVariance = 0
-	c.outQuantity = 1
+	c.outQuantity = 3
 	c.outBackups = 1
 	c.dontPublishLease = true
 	c.encryptLease = false
@@ -139,7 +143,7 @@ func NewClientFromOptions(opts ...func(*Client) error) (*Client, error) {
 	c.reduceIdleTime = 300000
 	c.reduceIdleQuantity = 1
 	c.closeIdle = true
-	c.closeIdleTime = 600000
+	c.closeIdleTime = 60000000
 	c.debug = true
 	c.sigType = SAMsigTypes[4]
 	c.id = 0
@@ -153,7 +157,7 @@ func NewClientFromOptions(opts ...func(*Client) error) (*Client, error) {
 			return nil, err
 		}
 	}
-	conn, err := net.Dial("tcp", c.samaddr())
+	conn, err := net.DialTimeout("tcp", c.samaddr(), 3*time.Minute)
 	if err != nil {
 		return nil, err
 	}

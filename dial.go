@@ -3,6 +3,7 @@ package goSam
 import (
 	"context"
 	"fmt"
+	"log"
 	"net"
 	"strings"
 )
@@ -17,19 +18,14 @@ func (c *Client) DialContext(ctx context.Context, network, addr string) (net.Con
 		if conn, err := c.Dial(network, addr); err != nil {
 			errCh <- err
 		} else if ctx.Err() != nil {
-			var err error
-			c, err = c.NewClient()
-			if err != nil {
-				conn.Close()
-			}
+			log.Println(ctx)
+			errCh <- ctx.Err()
 		} else {
 			connCh <- conn
 		}
 	}()
 	select {
 	case err := <-errCh:
-		//		var err error
-		c, err = c.NewClient()
 		return c.SamConn, err
 	case conn := <-connCh:
 		return conn, nil
@@ -44,6 +40,7 @@ func (c *Client) dialCheck(addr string) (int32, bool) {
 		return c.NewID(), true
 	} else if c.lastaddr != addr {
 		fmt.Println("Preparing to dial next new address.")
+		return c.NewID(), true
 	}
 	return c.id, false
 }
@@ -61,18 +58,24 @@ func (c *Client) Dial(network, addr string) (net.Conn, error) {
 		return nil, err
 	}
 
-	var test bool
-	if c.id, test = c.dialCheck(addr); test == true {
+	c.id, _ = c.dialCheck(addr)
+	c.destination, err = c.CreateStreamSession(c.id, c.destination)
+	if err != nil {
+		c.id += 1
+		c, err = c.NewClient()
+		if err != nil {
+			return nil, err
+		}
 		c.destination, err = c.CreateStreamSession(c.id, c.destination)
 		if err != nil {
 			return nil, err
 		}
-		c.lastaddr = addr
 	}
 	c, err = c.NewClient()
 	if err != nil {
 		return nil, err
 	}
+	c.lastaddr = addr
 
 	err = c.StreamConnect(c.id, addr)
 	if err != nil {
