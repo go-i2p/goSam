@@ -2,8 +2,6 @@
 
 package goSam
 
-/*
-
 import (
 	"fmt"
 	"math"
@@ -188,4 +186,3 @@ func TestOptionPortInt(t *testing.T) {
 	fmt.Printf("\t address64- %s \t", client.Base64())
 	fmt.Printf("\t address- %s \t", client.Base32())
 }
-*/

@@ -67,6 +67,12 @@ var SAMsigTypes = []string{
 	"SIGNATURE_TYPE=EdDSA_SHA512_Ed25519",
 }
 
+var ValidSAMCommands = []string{
+	"HELLO",
+	"SESSION",
+	"STREAM",
+}
+
 var (
 	i2pB64enc *base64.Encoding = base64.NewEncoding("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-~")
 	i2pB32enc *base32.Encoding = base32.NewEncoding("abcdefghijklmnopqrstuvwxyz234567")
@@ -143,7 +149,7 @@ func NewClientFromOptions(opts ...func(*Client) error) (*Client, error) {
 	c.reduceIdleTime = 300000
 	c.reduceIdleQuantity = 1
 	c.closeIdle = true
-	c.closeIdleTime = 60000000
+	c.closeIdleTime = 600000
 	c.debug = false
 	c.sigType = SAMsigTypes[4]
 	c.id = 0
@@ -157,6 +163,7 @@ func NewClientFromOptions(opts ...func(*Client) error) (*Client, error) {
 			return nil, err
 		}
 	}
+	c.id = c.NewID()
 	conn, err := net.DialTimeout("tcp", c.samaddr(), 3*time.Minute)
 	if err != nil {
 		return nil, err
@@ -220,8 +227,10 @@ func (c *Client) Close() error {
 	return c.SamConn.Close()
 }
 
-// NewClient generates an exact copy of the client with the same options
-func (c *Client) NewClient() (*Client, error) {
+// NewClient generates an exact copy of the client with the same options, but
+// re-does all the handshaky business so that Dial can pick up right where it
+// left off, should the need arise.
+func (c *Client) NewClient(id int32) (*Client, error) {
 	return NewClientFromOptions(
 		SetHost(c.host),
 		SetPort(c.port),
@@ -242,7 +251,6 @@ func (c *Client) NewClient() (*Client, error) {
 		SetCloseIdle(c.closeIdle),
 		SetCloseIdleTime(c.closeIdleTime),
 		SetCompression(c.compression),
-		setlastaddr(c.lastaddr),
-		setid(c.id),
+		setid(id),
 	)
 }

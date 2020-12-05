@@ -82,9 +82,7 @@ func parseReply(line string) (*Reply, error) {
 		} else {
 			kvPair := strings.SplitN(v, "=", 2)
 			if kvPair != nil {
-				if len(kvPair) == 1 {
-					return nil, fmt.Errorf("Malformed key-value-pair len 1.\n%s\n", kvPair)
-				} else if len(kvPair) != 2 {
+				if len(kvPair) != 2 {
 					return nil, fmt.Errorf("Malformed key-value-pair len != 2.\n%s\n", kvPair)
 				}
 			}
