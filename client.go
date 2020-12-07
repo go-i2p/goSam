@@ -11,7 +11,7 @@ import (
 	"math/rand"
 	"net"
 	"strings"
-	"sync"
+	//	"sync"
 	"time"
 )
 
@@ -53,10 +53,9 @@ type Client struct {
 
 	debug bool
 	//NEVER, EVER modify lastaddr or id yourself. They are used internally only.
-	lastaddr string
-	id       int32
-	ml       sync.Mutex
-	oml      sync.Mutex
+	id     int32
+	sammin int
+	sammax int
 }
 
 var SAMsigTypes = []string{
@@ -153,18 +152,19 @@ func NewClientFromOptions(opts ...func(*Client) error) (*Client, error) {
 	c.debug = false
 	c.sigType = SAMsigTypes[4]
 	c.id = 0
-	c.lastaddr = "invalid"
 	c.destination = ""
 	c.leaseSetEncType = "4,0"
 	c.fromport = ""
 	c.toport = ""
+	c.sammin = 0
+	c.sammax = 1
 	for _, o := range opts {
 		if err := o(&c); err != nil {
 			return nil, err
 		}
 	}
 	c.id = c.NewID()
-	conn, err := net.DialTimeout("tcp", c.samaddr(), 3*time.Minute)
+	conn, err := net.DialTimeout("tcp", c.samaddr(), 15*time.Minute)
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +191,7 @@ func (c *Client) samaddr() string {
 
 // send the initial handshake command and check that the reply is ok
 func (c *Client) hello() error {
-	r, err := c.sendCmd("HELLO VERSION MIN=3.0 MAX=3.2\n")
+	r, err := c.sendCmd("HELLO VERSION MIN=3.%d MAX=3.%d\n", c.sammin, c.sammax)
 	if err != nil {
 		return err
 	}
