@@ -7,7 +7,7 @@ import (
 // NewDestination generates a new I2P destination, creating the underlying
 // public/private keys in the process. The public key can be used to send messages
 // to the destination, while the private key can be used to reply to messages
-func (c *Client) NewDestination(sigType ...string) (string, error) {
+func (c *Client) NewDestination(sigType ...string) (string, string, error) {
 	var (
 		sigtmp string
 	)
@@ -28,5 +28,5 @@ func (c *Client) NewDestination(sigType ...string) (string, error) {
 	if pub = r.Pairs["PUB"]; pub == "" {
 		return priv, errors.New("failed to generate public destination key")
 	}
-	return priv + pub, nil
+	return priv, pub, nil
 }
