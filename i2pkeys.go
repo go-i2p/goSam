@@ -19,14 +19,14 @@ func (c *Client) NewDestination(sigType ...string) (string, string, error) {
 		sigtmp,
 	)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 	var pub, priv string
 	if priv = r.Pairs["PRIV"]; priv == "" {
-		return "", errors.New("failed to generate private destination key")
+		return "", "", errors.New("failed to generate private destination key")
 	}
 	if pub = r.Pairs["PUB"]; pub == "" {
-		return priv, errors.New("failed to generate public destination key")
+		return priv, "",  errors.New("failed to generate public destination key")
 	}
 	return priv, pub, nil
 }
