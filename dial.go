@@ -43,6 +43,9 @@ func (c *Client) DialContextFree(network, addr string) (net.Conn, error) {
 	if network == "udp" || network == "udp6" || network == "udp4" {
 		return c.DialDatagramContextFree(addr)
 	}
+	if network == "raw" || network == "ip" {
+		return c.DialDatagramContextFree(addr)
+	}
 	return c.DialStreamingContextFree(addr)
 }
 
