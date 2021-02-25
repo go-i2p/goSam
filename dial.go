@@ -37,6 +37,20 @@ func (c *Client) Dial(network, addr string) (net.Conn, error) {
 
 // Dial implements the net.Dial function and can be used for http.Transport
 func (c *Client) DialContextFree(network, addr string) (net.Conn, error) {
+	if network == "tcp" || network == "tcp6" || network == "tcp4" {
+		return c.DialStreamingContextFree(addr)
+	}
+	if network == "udp" || network == "udp6" || network == "udp4" {
+		return c.DialDatagramContextFree(addr)
+	}
+	return c.DialStreamingContextFree(addr)
+}
+
+func (c *Client) DialDatagramContextFree(addr string) (DatagramConn, error) {
+	return c.SamDGConn, nil
+}
+
+func (c *Client) DialStreamingContextFree(addr string) (net.Conn, error) {
 	portIdx := strings.Index(addr, ":")
 	if portIdx >= 0 {
 		addr = addr[:portIdx]
