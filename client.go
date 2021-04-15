@@ -11,7 +11,7 @@ import (
 	"math/rand"
 	"net"
 	"strings"
-	//	"sync"
+	"sync"
 	"time"
 )
 
@@ -53,6 +53,7 @@ type Client struct {
 	compression bool
 
 	debug bool
+	mutex sync.Mutex
 	//NEVER, EVER modify lastaddr or id yourself. They are used internally only.
 	id     int32
 	sammin int

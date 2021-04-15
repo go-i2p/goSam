@@ -9,6 +9,8 @@ import (
 
 // DialContext implements the net.DialContext function and can be used for http.Transport
 func (c *Client) DialContext(ctx context.Context, network, addr string) (net.Conn, error) {
+	c.mutex.Lock()
+	defer c.mutex.Unlock()
 	errCh := make(chan error, 1)
 	connCh := make(chan net.Conn, 1)
 	go func() {
@@ -29,6 +31,7 @@ func (c *Client) DialContext(ctx context.Context, network, addr string) (net.Con
 	case <-ctx.Done():
 		return nil, ctx.Err()
 	}
+
 }
 
 func (c *Client) Dial(network, addr string) (net.Conn, error) {
