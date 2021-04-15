@@ -24,8 +24,7 @@ func (c *Client) Listen() (net.Listener, error) {
 // with Accept
 func (c *Client) ListenI2P(dest string) (net.Listener, error) {
 	var err error
-	c.id = c.NewID()
-	c.destination, err = c.CreateStreamSession(c.id, dest)
+	c.destination, err = c.CreateStreamSession(dest)
 	d := c.destination
 	if err != nil {
 		return nil, err
@@ -52,7 +51,7 @@ func (c *Client) Accept() (net.Conn, error) {
 	if c.id == 0 {
 		return c.AcceptI2P()
 	}
-	resp, err := c.StreamAccept(c.id)
+	resp, err := c.StreamAccept()
 	if err != nil {
 		return nil, err
 	}

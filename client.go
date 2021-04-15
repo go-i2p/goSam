@@ -22,8 +22,9 @@ type Client struct {
 	fromport string
 	toport   string
 
-	SamConn net.Conn
-	rd      *bufio.Reader
+	SamConn   net.Conn
+	SamDGConn DatagramConn
+	rd        *bufio.Reader
 
 	sigType     string
 	destination string
@@ -91,6 +92,7 @@ func NewClient(addr string) (*Client, error) {
 func (c *Client) NewID() int32 {
 	if c.id == 0 {
 		c.id = rand.Int31n(math.MaxInt32)
+		fmt.Printf("Initializing new ID: %d\n", c.id)
 	}
 	return c.id
 }
@@ -177,7 +179,7 @@ func NewClientFromOptions(opts ...func(*Client) error) (*Client, error) {
 }
 
 func (p *Client) ID() string {
-	return fmt.Sprintf("%d", p.id)
+	return fmt.Sprintf("%d", p.NewID())
 }
 
 func (p *Client) Addr() net.Addr {

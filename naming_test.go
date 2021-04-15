@@ -10,8 +10,10 @@ import (
 func TestClientLookupInvalid(t *testing.T) {
 	var err error
 
-	setup(t)
-	defer teardown(t)
+	client, err := NewClientFromOptions(SetDebug(false))
+	if err != nil {
+		t.Fatalf("NewDefaultClient() Error: %q\n", err)
+	}
 
 	addr, err := client.Lookup(`!(@#)`)
 	if addr != "" || err == nil {
@@ -24,6 +26,9 @@ func TestClientLookupInvalid(t *testing.T) {
 	}
 	if repErr.Result != ResultKeyNotFound {
 		t.Errorf("client.Lookup() should throw an ResultKeyNotFound error.\nGot:%+v%s%s\n", repErr, "!=", ResultKeyNotFound)
+	}
+	if err := client.Close(); err != nil {
+		t.Fatalf("client.Close() Error: %q\n", err)
 	}
 }
 
