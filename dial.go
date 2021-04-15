@@ -64,36 +64,20 @@ func (c *Client) DialStreamingContextFree(addr string) (net.Conn, error) {
 		return nil, err
 	}
 
-	c.destination, err = c.CreateStreamSession(c.id, c.destination)
-	if err != nil {
-		c.Close()
-		d, err := c.NewClient(c.id + 1) /**/
+	if c.destination == "" {
+		c.destination, err = c.CreateStreamSession(c.destination)
 		if err != nil {
 			return nil, err
 		}
-		d.destination, err = d.CreateStreamSession(d.id, c.destination)
-		if err != nil {
-			return nil, err
-		}
-		d, err = d.NewClient(d.id)
-		if err != nil {
-			return nil, err
-		}
-		//	  d.lastaddr = addr
-		err = d.StreamConnect(d.id, addr)
-		if err != nil {
-			return nil, err
-		}
-		c = d
-		return d.SamConn, nil
 	}
-	c, err = c.NewClient(c.id)
+
+	d, err := c.NewClient(c.NewID())
 	if err != nil {
 		return nil, err
 	}
-	err = c.StreamConnect(c.id, addr)
+	err = d.StreamConnect(addr)
 	if err != nil {
 		return nil, err
 	}
-	return c.SamConn, nil
+	return d.SamConn, nil
 }

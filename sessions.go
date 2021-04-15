@@ -13,15 +13,15 @@ func init() {
 
 // CreateSession creates a new STREAM Session.
 // Returns the Id for the new Client.
-func (c *Client) CreateSession(id int32, style, dest string) (string, error) {
+func (c *Client) CreateSession(style, dest string) (string, error) {
 	if dest == "" {
 		dest = "TRANSIENT"
 	}
-	c.id = id
+	//	c.id = id
 	r, err := c.sendCmd(
-		"SESSION CREATE STYLE=%s ID=%d DESTINATION=%s %s %s %s %s \n",
+		"SESSION CREATE STYLE=%s ID=%s DESTINATION=%s %s %s %s %s \n",
 		style,
-		c.id,
+		c.ID(),
 		dest,
 		c.from(),
 		c.to(),
@@ -47,18 +47,18 @@ func (c *Client) CreateSession(id int32, style, dest string) (string, error) {
 
 // CreateStreamSession creates a new STREAM Session.
 // Returns the Id for the new Client.
-func (c *Client) CreateStreamSession(id int32, dest string) (string, error) {
-	return c.CreateSession(id, "STREAM", dest)
+func (c *Client) CreateStreamSession(dest string) (string, error) {
+	return c.CreateSession("STREAM", dest)
 }
 
 // CreateDatagramSession creates a new DATAGRAM Session.
 // Returns the Id for the new Client.
-func (c *Client) CreateDatagramSession(id int32, dest string) (string, error) {
-	return c.CreateSession(id, "DATAGRAM", dest)
+func (c *Client) CreateDatagramSession(dest string) (string, error) {
+	return c.CreateSession("DATAGRAM", dest)
 }
 
 // CreateRawSession creates a new RAW Session.
 // Returns the Id for the new Client.
-func (c *Client) CreateRawSession(id int32, dest string) (string, error) {
-	return c.CreateSession(id, "RAW", dest)
+func (c *Client) CreateRawSession(dest string) (string, error) {
+	return c.CreateSession("RAW", dest)
 }

@@ -5,11 +5,11 @@ import (
 )
 
 // StreamConnect asks SAM for a TCP-Like connection to dest, has to be called on a new Client
-func (c *Client) StreamConnect(id int32, dest string) error {
+func (c *Client) StreamConnect(dest string) error {
 	if dest == "" {
 		return nil
 	}
-	r, err := c.sendCmd("STREAM CONNECT ID=%d DESTINATION=%s %s %s\n", id, dest, c.from(), c.to())
+	r, err := c.sendCmd("STREAM CONNECT ID=%s DESTINATION=%s %s %s\n", c.ID(), dest, c.from(), c.to())
 	if err != nil {
 		return err
 	}
@@ -28,8 +28,8 @@ func (c *Client) StreamConnect(id int32, dest string) error {
 }
 
 // StreamAccept asks SAM to accept a TCP-Like connection
-func (c *Client) StreamAccept(id int32) (*Reply, error) {
-	r, err := c.sendCmd("STREAM ACCEPT ID=%d SILENT=false\n", id)
+func (c *Client) StreamAccept() (*Reply, error) {
+	r, err := c.sendCmd("STREAM ACCEPT ID=%s SILENT=false\n", c.ID())
 	if err != nil {
 		return nil, err
 	}

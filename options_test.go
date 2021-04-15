@@ -31,12 +31,12 @@ func (c *Client) validCmd(str string, args ...interface{}) (string, error) {
 
 func (c *Client) validCreate() (string, error) {
 	id := rand.Int31n(math.MaxInt32)
-	result, err := c.validCmd("SESSION CREATE STYLE=STREAM ID=%d DESTINATION=%s %s\n", id, "abc.i2p", client.allOptions())
+	result, err := c.validCmd("SESSION CREATE STYLE=STREAM ID=%d DESTINATION=%s %s\n", id, "abc.i2p", c.allOptions())
 	return result, err
 }
 
 func TestOptionAddrString(t *testing.T) {
-	client, err := NewClientFromOptions(SetAddr("127.0.0.1:7656"), SetDebug(true))
+	client, err := NewClientFromOptions(SetAddr("127.0.0.1:7656"), SetDebug(false))
 	if err != nil {
 		t.Fatalf("NewClientFromOptions() Error: %q\n", err)
 	}
@@ -45,17 +45,17 @@ func TestOptionAddrString(t *testing.T) {
 	} else {
 		t.Log(result)
 	}
-	dest, _ := client.CreateStreamSession(client.NewID(), "")
+	_, err = client.CreateStreamSession("")
 	if err := client.Close(); err != nil {
 		t.Fatalf("client.Close() Error: %q\n", err)
 	}
-	fmt.Printf("\t destination- %s \n", dest)
-	fmt.Printf("\t address64- %s \t", client.Base64())
-	fmt.Printf("\t address- %s \t", client.Base32())
+	/*	fmt.Printf("\t destination- %s \n", dest)
+		fmt.Printf("\t address64- %s \t", client.Base64())
+		fmt.Printf("\t address- %s \t", client.Base32())*/
 }
 
 func TestOptionAddrStringLh(t *testing.T) {
-	client, err := NewClientFromOptions(SetAddr("localhost:7656"), SetDebug(true))
+	client, err := NewClientFromOptions(SetAddr("localhost:7656"), SetDebug(false))
 	if err != nil {
 		t.Fatalf("NewClientFromOptions() Error: %q\n", err)
 	}
@@ -64,17 +64,17 @@ func TestOptionAddrStringLh(t *testing.T) {
 	} else {
 		t.Log(result)
 	}
-	dest, _ := client.CreateStreamSession(client.NewID(), "")
+	_, err = client.CreateStreamSession("")
 	if err := client.Close(); err != nil {
 		t.Fatalf("client.Close() Error: %q\n", err)
 	}
-	fmt.Printf("\t destination- %s \n", dest)
-	fmt.Printf("\t address64- %s \t", client.Base64())
-	fmt.Printf("\t address- %s \t", client.Base32())
+	/*	fmt.Printf("\t destination- %s \n", dest)
+		fmt.Printf("\t address64- %s \t", client.Base64())
+		fmt.Printf("\t address- %s \t", client.Base32())*/
 }
 
 func TestOptionAddrSlice(t *testing.T) {
-	client, err := NewClientFromOptions(SetAddr("127.0.0.1", "7656"), SetDebug(true))
+	client, err := NewClientFromOptions(SetAddr("127.0.0.1", "7656"), SetDebug(false))
 	if err != nil {
 		t.Fatalf("NewClientFromOptions() Error: %q\n", err)
 	}
@@ -83,17 +83,17 @@ func TestOptionAddrSlice(t *testing.T) {
 	} else {
 		t.Log(result)
 	}
-	dest, _ := client.CreateStreamSession(client.NewID(), "")
+	_, err = client.CreateStreamSession("")
 	if err := client.Close(); err != nil {
 		t.Fatalf("client.Close() Error: %q\n", err)
 	}
-	fmt.Printf("\t destination- %s \n", dest)
-	fmt.Printf("\t address64- %s \t", client.Base64())
-	fmt.Printf("\t address- %s \t", client.Base32())
+	/*	fmt.Printf("\t destination- %s \n", dest)
+		fmt.Printf("\t address64- %s \t", client.Base64())
+		fmt.Printf("\t address- %s \t", client.Base32())*/
 }
 
 func TestOptionAddrMixedSlice(t *testing.T) {
-	client, err := NewClientFromOptions(SetAddrMixed("127.0.0.1", 7656), SetDebug(true))
+	client, err := NewClientFromOptions(SetAddrMixed("127.0.0.1", 7656), SetDebug(false))
 	if err != nil {
 		t.Fatalf("NewClientFromOptions() Error: %q\n", err)
 	}
@@ -102,13 +102,13 @@ func TestOptionAddrMixedSlice(t *testing.T) {
 	} else {
 		t.Log(result)
 	}
-	dest, _ := client.CreateStreamSession(client.NewID(), "")
+	_, err = client.CreateStreamSession("")
 	if err := client.Close(); err != nil {
 		t.Fatalf("client.Close() Error: %q\n", err)
 	}
-	fmt.Printf("\t destination- %s \n", dest)
-	fmt.Printf("\t address64- %s \t", client.Base64())
-	fmt.Printf("\t address- %s \t", client.Base32())
+	/*	fmt.Printf("\t destination- %s \n", dest)
+		fmt.Printf("\t address64- %s \t", client.Base64())
+		fmt.Printf("\t address- %s \t", client.Base32())*/
 }
 
 func TestOptionHost(t *testing.T) {
@@ -124,7 +124,7 @@ func TestOptionHost(t *testing.T) {
 		SetInBackups(2),
 		SetOutBackups(2),
 		SetEncrypt(true),
-		SetDebug(true),
+		SetDebug(false),
 		SetUnpublished(true),
 		SetReduceIdle(true),
 		SetReduceIdleTime(300001),
@@ -140,13 +140,13 @@ func TestOptionHost(t *testing.T) {
 	} else {
 		t.Log(result)
 	}
-	dest, _ := client.CreateStreamSession(client.NewID(), "")
+	_, err = client.CreateStreamSession("")
 	if err := client.Close(); err != nil {
 		t.Fatalf("client.Close() Error: %q\n", err)
 	}
-	fmt.Printf("\t destination- %s \n", dest)
-	fmt.Printf("\t address64- %s \t", client.Base64())
-	fmt.Printf("\t address- %s \t", client.Base32())
+	/*	fmt.Printf("\t destination- %s \n", dest)
+		fmt.Printf("\t address64- %s \t", client.Base64())
+		fmt.Printf("\t address- %s \t", client.Base32())*/
 }
 
 func TestOptionPortInt(t *testing.T) {
@@ -162,7 +162,7 @@ func TestOptionPortInt(t *testing.T) {
 		SetInBackups(2),
 		SetOutBackups(2),
 		SetEncrypt(true),
-		SetDebug(true),
+		SetDebug(false),
 		SetUnpublished(true),
 		SetReduceIdle(true),
 		SetReduceIdleTime(300001),
@@ -178,11 +178,11 @@ func TestOptionPortInt(t *testing.T) {
 	} else {
 		t.Log(result)
 	}
-	dest, _ := client.CreateStreamSession(client.NewID(), "")
+	_, err = client.CreateStreamSession("")
 	if err := client.Close(); err != nil {
 		t.Fatalf("client.Close() Error: %q\n", err)
 	}
-	fmt.Printf("\t destination- %s \n", dest)
-	fmt.Printf("\t address64- %s \t", client.Base64())
-	fmt.Printf("\t address- %s \t", client.Base32())
+	/*	fmt.Printf("\t destination- %s \n", dest)
+		fmt.Printf("\t address64- %s \t", client.Base64())
+		fmt.Printf("\t address- %s \t", client.Base32())*/
 }
