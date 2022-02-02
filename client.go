@@ -24,9 +24,10 @@ type Client struct {
 	fromport string
 	toport   string
 
-	SamConn   net.Conn
-	SamDGConn DatagramConn
+	SamConn   net.Conn     // Control socket
+	SamDGConn DatagramConn // Datagram socket
 	rd        *bufio.Reader
+	d         *Client
 
 	sigType     string
 	destination string

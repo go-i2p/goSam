@@ -28,13 +28,21 @@ func (c *Client) ListenI2P(dest string) (net.Listener, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	if c.d == nil {
+		c.d, err = c.NewClient(c.NewID())
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	fmt.Println("Listening on destination:", c.Base32()+".b32.i2p")
 
 	if c.debug {
 		c.SamConn = WrapConn(c.SamConn)
 	}
 
-	return c, nil
+	return c.d, nil
 }
 
 // Accept accepts a connection on a listening goSam.Client(Implements net.Listener)
