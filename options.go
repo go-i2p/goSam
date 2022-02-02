@@ -186,7 +186,7 @@ func SetToPortInt(i int) func(*Client) error {
 func SetDebug(b bool) func(*Client) error {
 	return func(c *Client) error {
 		//c.debug = b
-		d.debug = true
+		c.debug = true
 		return nil
 	}
 }
