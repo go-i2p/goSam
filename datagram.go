@@ -20,7 +20,6 @@ type DatagramConn interface {
 }
 
 /**
-var conn DatagramConn = &Client{}
-
-
-*/
+ * When datagram support is finished, this will compile.
+ * var conn DatagramConn = &Client{}
+**/

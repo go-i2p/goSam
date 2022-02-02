@@ -76,16 +76,14 @@ func (c *Client) DialStreamingContextFree(addr string) (net.Conn, error) {
 			return nil, err
 		}
 	}
-	if c.d == nil {
-		c.d, err = c.NewClient(c.NewID())
-		if err != nil {
-			return nil, err
-		}
-	}
 
-	err = c.d.StreamConnect(addr)
+	d, err := c.NewClient(c.NewID())
 	if err != nil {
 		return nil, err
 	}
-	return c.d.SamConn, nil
+	err = d.StreamConnect(addr)
+	if err != nil {
+		return nil, err
+	}
+	return d.SamConn, nil
 }

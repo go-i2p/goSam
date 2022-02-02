@@ -46,7 +46,7 @@ func TestCompositeClient(t *testing.T) {
 	//	http.HandleFunc("/", HelloServer)
 	go http.Serve(listener3, nil)
 
-	sam, err := NewClientFromOptions(SetDebug(true))
+	sam, err := NewClientFromOptions(SetDebug(false))
 	if err != nil {
 		t.Fatalf("NewDefaultClient() Error: %q\n", err)
 	}
@@ -55,27 +55,32 @@ func TestCompositeClient(t *testing.T) {
 	}
 	client := &http.Client{Transport: tr}
 	defer sam.Close()
-	time.Sleep(time.Second * 30)
+	x := 0
+	for x < 15 {
+		time.Sleep(time.Second * 2)
+		t.Log("waiting a little while for services to register", (30 - (x * 2)))
+		x++
+	}
 	go func() {
 		resp, err := client.Get("http://" + listener.Addr().(i2pkeys.I2PAddr).Base32())
 		if err != nil {
-			t.Fatalf("Get Error: %q\n", err)
+			t.Fatalf("Get Error test 1: %q\n", err)
 		}
 		defer resp.Body.Close()
 	}()
-	time.Sleep(time.Second * 15)
+	//time.Sleep(time.Second * 15)
 	go func() {
 		resp, err := client.Get("http://" + listener2.Addr().(i2pkeys.I2PAddr).Base32())
 		if err != nil {
-			t.Fatalf("Get Error: %q\n", err)
+			t.Fatalf("Get Error test 2: %q\n", err)
 		}
 		defer resp.Body.Close()
 	}()
-	time.Sleep(time.Second * 15)
+	//time.Sleep(time.Second * 15)
 	go func() {
 		resp, err := client.Get("http://" + listener3.Addr().(i2pkeys.I2PAddr).Base32())
 		if err != nil {
-			t.Fatalf("Get Error: %q\n", err)
+			t.Fatalf("Get Error test 3: %q\n", err)
 		}
 		defer resp.Body.Close()
 	}()
@@ -84,7 +89,7 @@ func TestCompositeClient(t *testing.T) {
 }
 
 func TestClientHello(t *testing.T) {
-	client, err := NewClientFromOptions(SetDebug(true))
+	client, err := NewClientFromOptions(SetDebug(false))
 	if err != nil {
 		t.Fatalf("NewDefaultClient() Error: %q\n", err)
 	}
@@ -95,7 +100,7 @@ func TestClientHello(t *testing.T) {
 }
 
 func TestNewDestination(t *testing.T) {
-	client, err := NewClientFromOptions(SetDebug(true))
+	client, err := NewClientFromOptions(SetDebug(false))
 	if err != nil {
 		t.Fatalf("NewDefaultClient() Error: %q\n", err)
 	}

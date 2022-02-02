@@ -11,7 +11,7 @@ import (
 func TestClientLookupInvalid(t *testing.T) {
 	var err error
 
-	client, err := NewClientFromOptions(SetDebug(true))
+	client, err := NewClientFromOptions(SetDebug(false))
 	if err != nil {
 		t.Fatalf("NewDefaultClient() Error: %q\n", err)
 	}

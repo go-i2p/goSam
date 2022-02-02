@@ -27,7 +27,7 @@ type Client struct {
 	SamConn   net.Conn     // Control socket
 	SamDGConn DatagramConn // Datagram socket
 	rd        *bufio.Reader
-	d         *Client
+	//	d         *Client
 
 	sigType     string
 	destination string
@@ -93,11 +93,16 @@ func NewClient(addr string) (*Client, error) {
 	return NewClientFromOptions(SetAddr(addr))
 }
 
+func NewID() int32 {
+	id := rand.Int31n(math.MaxInt32)
+	fmt.Printf("Initializing new ID: %d\n", id)
+	return id
+}
+
 // NewID generates a random number to use as an tunnel name
 func (c *Client) NewID() int32 {
 	if c.id == 0 {
-		c.id = rand.Int31n(math.MaxInt32)
-		fmt.Printf("Initializing new ID: %d\n", c.id)
+		c.id = NewID()
 	}
 	return c.id
 }
