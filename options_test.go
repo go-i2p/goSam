@@ -1,3 +1,4 @@
+//go:build nettest
 // +build nettest
 
 package goSam
@@ -36,7 +37,7 @@ func (c *Client) validCreate() (string, error) {
 }
 
 func TestOptionAddrString(t *testing.T) {
-	client, err := NewClientFromOptions(SetAddr("127.0.0.1:7656"), SetDebug(false))
+	client, err := NewClientFromOptions(SetAddr("127.0.0.1:7656"), SetDebug(true))
 	if err != nil {
 		t.Fatalf("NewClientFromOptions() Error: %q\n", err)
 	}
@@ -55,7 +56,7 @@ func TestOptionAddrString(t *testing.T) {
 }
 
 func TestOptionAddrStringLh(t *testing.T) {
-	client, err := NewClientFromOptions(SetAddr("localhost:7656"), SetDebug(false))
+	client, err := NewClientFromOptions(SetAddr("localhost:7656"), SetDebug(true))
 	if err != nil {
 		t.Fatalf("NewClientFromOptions() Error: %q\n", err)
 	}
@@ -74,7 +75,7 @@ func TestOptionAddrStringLh(t *testing.T) {
 }
 
 func TestOptionAddrSlice(t *testing.T) {
-	client, err := NewClientFromOptions(SetAddr("127.0.0.1", "7656"), SetDebug(false))
+	client, err := NewClientFromOptions(SetAddr("127.0.0.1", "7656"), SetDebug(true))
 	if err != nil {
 		t.Fatalf("NewClientFromOptions() Error: %q\n", err)
 	}
@@ -93,7 +94,7 @@ func TestOptionAddrSlice(t *testing.T) {
 }
 
 func TestOptionAddrMixedSlice(t *testing.T) {
-	client, err := NewClientFromOptions(SetAddrMixed("127.0.0.1", 7656), SetDebug(false))
+	client, err := NewClientFromOptions(SetAddrMixed("127.0.0.1", 7656), SetDebug(true))
 	if err != nil {
 		t.Fatalf("NewClientFromOptions() Error: %q\n", err)
 	}
@@ -124,7 +125,7 @@ func TestOptionHost(t *testing.T) {
 		SetInBackups(2),
 		SetOutBackups(2),
 		SetEncrypt(true),
-		SetDebug(false),
+		SetDebug(true),
 		SetUnpublished(true),
 		SetReduceIdle(true),
 		SetReduceIdleTime(300001),
@@ -162,7 +163,7 @@ func TestOptionPortInt(t *testing.T) {
 		SetInBackups(2),
 		SetOutBackups(2),
 		SetEncrypt(true),
-		SetDebug(false),
+		SetDebug(true),
 		SetUnpublished(true),
 		SetReduceIdle(true),
 		SetReduceIdleTime(300001),

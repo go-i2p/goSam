@@ -11,8 +11,9 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-// CreateSession creates a new STREAM Session.
-// Returns the Id for the new Client.
+// CreateSession creates a new Session of type style, with an optional destination.
+// an empty destination is interpreted as "TRANSIENT"
+// Returns the destination for the new Client or an error.
 func (c *Client) CreateSession(style, dest string) (string, error) {
 	if dest == "" {
 		dest = "TRANSIENT"

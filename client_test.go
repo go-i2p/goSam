@@ -1,3 +1,4 @@
+//go:build nettest
 // +build nettest
 
 package goSam
@@ -45,7 +46,7 @@ func TestCompositeClient(t *testing.T) {
 	//	http.HandleFunc("/", HelloServer)
 	go http.Serve(listener3, nil)
 
-	sam, err := NewClientFromOptions(SetDebug(false))
+	sam, err := NewClientFromOptions(SetDebug(true))
 	if err != nil {
 		t.Fatalf("NewDefaultClient() Error: %q\n", err)
 	}
@@ -83,7 +84,7 @@ func TestCompositeClient(t *testing.T) {
 }
 
 func TestClientHello(t *testing.T) {
-	client, err := NewClientFromOptions(SetDebug(false))
+	client, err := NewClientFromOptions(SetDebug(true))
 	if err != nil {
 		t.Fatalf("NewDefaultClient() Error: %q\n", err)
 	}
@@ -94,7 +95,7 @@ func TestClientHello(t *testing.T) {
 }
 
 func TestNewDestination(t *testing.T) {
-	client, err := NewClientFromOptions(SetDebug(false))
+	client, err := NewClientFromOptions(SetDebug(true))
 	if err != nil {
 		t.Fatalf("NewDefaultClient() Error: %q\n", err)
 	}

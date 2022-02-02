@@ -1,3 +1,4 @@
+//go:build nettest
 // +build nettest
 
 package goSam
@@ -10,7 +11,7 @@ import (
 func TestClientLookupInvalid(t *testing.T) {
 	var err error
 
-	client, err := NewClientFromOptions(SetDebug(false))
+	client, err := NewClientFromOptions(SetDebug(true))
 	if err != nil {
 		t.Fatalf("NewDefaultClient() Error: %q\n", err)
 	}
