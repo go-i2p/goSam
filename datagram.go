@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// DatagramConn
 type DatagramConn interface {
 	ReadFrom(p []byte) (n int, addr net.Addr, err error)
 	Read(b []byte) (n int, err error)
@@ -17,3 +18,9 @@ type DatagramConn interface {
 	SetReadDeadline(t time.Time) error
 	SetWriteDeadline(t time.Time) error
 }
+
+/**
+var conn DatagramConn = &Client{}
+
+
+*/

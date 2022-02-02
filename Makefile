@@ -1,6 +1,6 @@
 
 USER_GH=eyedeekay
-VERSION=0.32.30
+VERSION=0.32.4
 packagename=gosam
 
 echo: fmt

@@ -13,6 +13,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	samkeys "github.com/eyedeekay/goSam/compat"
 )
 
 // A Client represents a single Connection to the SAM bridge
@@ -60,6 +62,7 @@ type Client struct {
 	sammax int
 }
 
+// SAMsigTypes is a slice of the available signature types
 var SAMsigTypes = []string{
 	"SIGNATURE_TYPE=DSA_SHA1",
 	"SIGNATURE_TYPE=ECDSA_SHA256_P256",
@@ -179,12 +182,22 @@ func NewClientFromOptions(opts ...func(*Client) error) (*Client, error) {
 	return &c, c.hello()
 }
 
+// ID returns a the current ID of the client as a string
 func (p *Client) ID() string {
 	return fmt.Sprintf("%d", p.NewID())
 }
 
+// Addr returns the address of the client as a net.Addr
 func (p *Client) Addr() net.Addr {
-	return nil
+	keys, err := samkeys.DestToKeys(p.Destination())
+	if err != nil {
+		return nil
+	}
+	return keys.Addr()
+}
+
+func (p *Client) LocalAddr() net.Addr {
+	return p.Addr()
 }
 
 //return the combined host:port of the SAM bridge

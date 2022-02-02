@@ -2,6 +2,7 @@ package goSam
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 	"strings"
@@ -52,8 +53,10 @@ func (c *Client) DialContextFree(network, addr string) (net.Conn, error) {
 	return c.DialStreamingContextFree(addr)
 }
 
+// DialDatagramContextFree is a "Dialer" for "Client-Like" Datagram connections.
+// It is also not finished. If you need datagram support right now, use sam3.
 func (c *Client) DialDatagramContextFree(addr string) (DatagramConn, error) {
-	return c.SamDGConn, nil
+	return nil, fmt.Errorf("Datagram support is not finished yet, come back later`")
 }
 
 func (c *Client) DialStreamingContextFree(addr string) (net.Conn, error) {
