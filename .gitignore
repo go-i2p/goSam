@@ -24,3 +24,5 @@ itp-golang-github-eyedeekay-gosam.txt
 .pc
 deb/
 samsocks/samsocks
+*.private
+*.public.txt

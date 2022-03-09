@@ -13,8 +13,7 @@ import (
 	"strings"
 	"sync"
 	"time"
-
-	samkeys "github.com/eyedeekay/goSam/compat"
+	//samkeys "github.com/eyedeekay/goSam/compat"
 )
 
 // A Client represents a single Connection to the SAM bridge
@@ -195,11 +194,8 @@ func (p *Client) ID() string {
 
 // Addr returns the address of the client as a net.Addr
 func (p *Client) Addr() net.Addr {
-	keys, err := samkeys.DestToKeys(p.Destination())
-	if err != nil {
-		return nil
-	}
-	return keys.Addr()
+	keys := I2PAddr(p.Destination())
+	return keys
 }
 
 func (p *Client) LocalAddr() net.Addr {

@@ -7,21 +7,20 @@ import "testing"
 
 import (
 	"fmt"
-	"math"
-	"math/rand"
-	"time"
+	//	"math"
+	//	"math/rand"
+	//	"time"
 	//"log"
 	"net/http"
-
-	"github.com/eyedeekay/sam3/helper"
-	"github.com/eyedeekay/sam3/i2pkeys"
+	//"github.com/eyedeekay/sam3/helper"
+	//"github.com/eyedeekay/sam3/i2pkeys"
 )
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, %s!", r.URL.Path[1:])
 }
 
-func TestCompositeClient(t *testing.T) {
+/*func TestCompositeClient(t *testing.T) {
 	listener, err := sam.I2PListener("testservice"+fmt.Sprintf("%d", rand.Int31n(math.MaxInt32)), "127.0.0.1:7656", "testkeys")
 	if err != nil {
 		t.Fatalf("Listener() Error: %q\n", err)
@@ -86,7 +85,7 @@ func TestCompositeClient(t *testing.T) {
 	}()
 
 	time.Sleep(time.Second * 45)
-}
+}*/
 
 func TestClientHello(t *testing.T) {
 	client, err := NewClientFromOptions(SetDebug(false))
