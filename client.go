@@ -13,6 +13,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/eyedeekay/i2pkeys"
 	//samkeys "github.com/eyedeekay/goSam/compat"
 )
 
@@ -194,7 +196,7 @@ func (p *Client) ID() string {
 
 // Addr returns the address of the client as a net.Addr
 func (p *Client) Addr() net.Addr {
-	keys := I2PAddr(p.Destination())
+	keys := i2pkeys.I2PAddr(p.Destination())
 	return keys
 }
 

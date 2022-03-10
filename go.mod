@@ -1,6 +1,7 @@
 module github.com/eyedeekay/goSam
 
 require (
+	github.com/eyedeekay/i2pkeys v0.0.0-20220310055120-b97558c06ac8
 	github.com/getlantern/fdcount v0.0.0-20210503151800-5decd65b3731 // indirect
 	github.com/getlantern/go-socks5 v0.0.0-20171114193258-79d4dd3e2db5
 	github.com/getlantern/golog v0.0.0-20201105130739-9586b8bde3a9 // indirect

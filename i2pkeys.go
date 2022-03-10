@@ -1,6 +1,6 @@
 package goSam
 
-import (
+/*import (
 	"crypto/sha256"
 	"errors"
 	"strings"
@@ -111,3 +111,4 @@ func (c *Client) NewDestination(sigType ...string) (string, string, error) {
 	}
 	return priv, pub, nil
 }
+*/
