@@ -68,6 +68,48 @@ func checkErr(err error) {
 		log.Fatal(err)
 	}
 }
+
+```
+
+### Using SAM by default, as a proxy for all HTTP Clients used by a Go application
+
+This will make the SAM transport dialer the default for all HTTP clients.
+
+```go
+package main
+
+import (
+	"io"
+	"log"
+	"net/http"
+	"os"
+
+	"github.com/cryptix/goSam"
+)
+
+func main() {
+	sam, err := goSam.NewDefaultClient()
+	checkErr(err)
+
+	log.Println("Client Created")
+
+	// create a transport that uses SAM to dial TCP Connections
+	httpClient := &http.Client{
+		Transport: &http.Transport{
+			Dial: sam.Dial,
+		},
+	}
+
+	//colly.SetHTTPClient(httpClient)
+	http.DefaultClient = httpClient
+	return nil
+}
+
+func checkErr(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
 ```
 
 ## Using it as a SOCKS proxy
