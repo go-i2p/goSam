@@ -100,7 +100,6 @@ func main() {
 		},
 	}
 
-	//colly.SetHTTPClient(httpClient)
 	http.DefaultClient = httpClient
 	return nil
 }
