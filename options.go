@@ -62,6 +62,22 @@ func SetHost(s string) func(*Client) error {
 	}
 }
 
+//SetUser sets the username for authentication during the SAM HELLO phase
+func SetUser(s string) func(*Client) error {
+	return func(c *Client) error {
+		c.user = s
+		return nil
+	}
+}
+
+//SetUser sets the password for authentication during the SAM HELLO phase
+func SetPass(s string) func(*Client) error {
+	return func(c *Client) error {
+		c.pass = s
+		return nil
+	}
+}
+
 func SetSAMMinVersion(i int) func(*Client) error {
 	return func(c *Client) error {
 		if i < 0 {
@@ -554,4 +570,18 @@ func (c *Client) Print() string {
 		c.closeonidle() +
 		c.closeidletime() +
 		c.compresion()
+}
+
+func (c *Client) getUser() string {
+	if c.user == "" {
+		return ""
+	}
+	return fmt.Sprintf("USER=%s", c.user)
+}
+
+func (c *Client) getPass() string {
+	if c.pass == "" {
+		return ""
+	}
+	return fmt.Sprintf("PASSWORD=%s", c.pass)
 }

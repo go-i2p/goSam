@@ -24,6 +24,8 @@ type Client struct {
 	port     string
 	fromport string
 	toport   string
+	user     string
+	pass     string
 
 	SamConn   net.Conn     // Control socket
 	SamDGConn DatagramConn // Datagram socket
@@ -211,7 +213,8 @@ func (c *Client) samaddr() string {
 
 // send the initial handshake command and check that the reply is ok
 func (c *Client) hello() error {
-	r, err := c.sendCmd("HELLO VERSION MIN=3.%d MAX=3.%d\n", c.sammin, c.sammax)
+
+	r, err := c.sendCmd("HELLO VERSION MIN=3.%d MAX=3.%d %s %s\n", c.sammin, c.sammax, c.getUser(), c.getPass())
 	if err != nil {
 		return err
 	}
