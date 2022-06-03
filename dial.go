@@ -39,7 +39,7 @@ func (c *Client) Dial(network, addr string) (net.Conn, error) {
 	return c.DialContext(context.TODO(), network, addr)
 }
 
-// Dial implements the net.Dial function and can be used for http.Transport
+// DialContextFree implements the net.Dial function and can be used for http.Transport
 func (c *Client) DialContextFree(network, addr string) (net.Conn, error) {
 	if network == "tcp" || network == "tcp6" || network == "tcp4" {
 		return c.DialStreamingContextFree(addr)
@@ -55,10 +55,21 @@ func (c *Client) DialContextFree(network, addr string) (net.Conn, error) {
 
 // DialDatagramContextFree is a "Dialer" for "Client-Like" Datagram connections.
 // It is also not finished. If you need datagram support right now, use sam3.
-func (c *Client) DialDatagramContextFree(addr string) (DatagramConn, error) {
+func (c *Client) DialDatagramContextFree(addr string) (*DatagramConn, error) {
+	portIdx := strings.Index(addr, ":")
+	if portIdx >= 0 {
+		addr = addr[:portIdx]
+	}
+	addr, err := c.Lookup(addr)
+	if err != nil {
+		log.Printf("LOOKUP DIALER ERROR %s %s", addr, err)
+		return nil, err
+	}
+
 	return nil, fmt.Errorf("Datagram support is not finished yet, come back later`")
 }
 
+// DialStreamingContextFree is a "Dialer" for "Client-Like" Streaming connections.
 func (c *Client) DialStreamingContextFree(addr string) (net.Conn, error) {
 	portIdx := strings.Index(addr, ":")
 	if portIdx >= 0 {

@@ -27,8 +27,8 @@ type Client struct {
 	user     string
 	pass     string
 
-	SamConn   net.Conn     // Control socket
-	SamDGConn DatagramConn // Datagram socket
+	SamConn   net.Conn       // Control socket
+	SamDGConn net.PacketConn // Datagram socket
 	rd        *bufio.Reader
 	//	d         *Client
 
@@ -204,6 +204,13 @@ func (p *Client) Addr() net.Addr {
 
 func (p *Client) LocalAddr() net.Addr {
 	return p.Addr()
+}
+
+// LocalKeys returns the local keys of the client as a fully-fledged i2pkeys.I2PKeys
+func (p *Client) PrivateAddr() i2pkeys.I2PKeys {
+	//keys := i2pkeys.I2PAddr(p.Destination())
+	keys := i2pkeys.NewKeys(i2pkeys.I2PAddr(p.base64()), p.Destination())
+	return keys
 }
 
 //return the combined host:port of the SAM bridge
