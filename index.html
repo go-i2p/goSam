@@ -1,0 +1,300 @@
+<html>
+  <head>
+    <title>
+      goSam
+    </title>
+    <meta name="author" content="eyedeekay" />
+    <meta name="description" content="goSam" />
+    <meta name="keywords" content="master" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script type="text/javascript" src=""></script>
+  </head>
+  <body>
+    <div id="navbar">
+      <a href="#shownav">
+        Show navigation
+      </a>
+      <div id="shownav">
+        <div id="hidenav">
+          <ul>
+            <li>
+              <a href="index.html">
+                index
+              </a>
+            </li>
+            <li>
+              <a href="CONTRIBUTING.html">
+                CONTRIBUTING
+              </a>
+            </li>
+          </ul>
+          <br>
+          <a href="#hidenav">
+            Hide Navigation
+          </a>
+        </div>
+      </div>
+    </div>
+    <h1>
+      <a href="/">
+        goSam
+      </a>
+    </h1>
+    <p>
+      A go library for using the
+      <a href="https://geti2p.net/en/" rel="nofollow">
+        I2P
+      </a>
+      Simple Anonymous
+      Messaging (
+      <a href="https://geti2p.net/en/docs/api/samv3" rel="nofollow">
+        SAM version 3.0
+      </a>
+      ) bridge. It
+      has support for all streaming features SAM version 3.2.
+    </p>
+    <p>
+      This is widely used and easy to use, but thusfar, mostly by me. It sees a lot of
+      testing and no breaking changes to the API are expected.
+    </p>
+    <h2>
+      Installation
+    </h2>
+    <pre><code>go get github.com/eyedeekay/goSam
+</code></pre>
+    <h2>
+      Using it for HTTP Transport
+    </h2>
+    <p>
+      <code>
+        Client.Dial
+      </code>
+      implements
+      <code>
+        net.Dial
+      </code>
+      so you can use go’s library packages like http.
+    </p>
+    <pre><code>package main
+
+import (
+	&#34;io&#34;
+	&#34;log&#34;
+	&#34;net/http&#34;
+	&#34;os&#34;
+
+	&#34;github.com/cryptix/goSam&#34;
+)
+
+func main() {
+	// create a default sam client
+	sam, err := goSam.NewDefaultClient()
+	checkErr(err)
+
+	log.Println(&#34;Client Created&#34;)
+
+	// create a transport that uses SAM to dial TCP Connections
+	tr := &amp;http.Transport{
+		Dial: sam.Dial,
+	}
+
+	// create  a client using this transport
+	client := &amp;http.Client{Transport: tr}
+
+	// send a get request
+	resp, err := client.Get(&#34;http://stats.i2p/&#34;)
+	checkErr(err)
+	defer resp.Body.Close()
+
+	log.Printf(&#34;Get returned %+v\n&#34;, resp)
+
+	// create a file for the response
+	file, err := os.Create(&#34;stats.html&#34;)
+	checkErr(err)
+	defer file.Close()
+
+	// copy the response to the file
+	_, err = io.Copy(file, resp.Body)
+	checkErr(err)
+
+	log.Println(&#34;Done.&#34;)
+}
+
+func checkErr(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+</code></pre>
+    <h3>
+      Using SAM by default, as a proxy for all HTTP Clients used by a Go application
+    </h3>
+    <p>
+      This will make the SAM transport dialer the default for all HTTP clients.
+    </p>
+    <pre><code>package main
+
+import (
+	&#34;io&#34;
+	&#34;log&#34;
+	&#34;net/http&#34;
+	&#34;os&#34;
+
+	&#34;github.com/cryptix/goSam&#34;
+)
+
+func main() {
+	sam, err := goSam.NewDefaultClient()
+	checkErr(err)
+
+	log.Println(&#34;Client Created&#34;)
+
+	// create a transport that uses SAM to dial TCP Connections
+	httpClient := &amp;http.Client{
+		Transport: &amp;http.Transport{
+			Dial: sam.Dial,
+		},
+	}
+
+	http.DefaultClient = httpClient
+	return nil
+}
+
+func checkErr(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+</code></pre>
+    <h2>
+      Using it as a SOCKS proxy
+    </h2>
+    <p>
+      <code>
+        client
+      </code>
+      also implements a resolver compatible with
+      <a href="https://github.com/getlantern/go-socks5" rel="nofollow">
+        <code>
+          getlantern/go-socks5
+        </code>
+      </a>
+      ,
+      making it very easy to implement a SOCKS5 server.
+    </p>
+    <pre><code>package main
+
+import (
+  &#34;flag&#34;
+
+	&#34;github.com/eyedeekay/goSam&#34;
+	&#34;github.com/getlantern/go-socks5&#34;
+	&#34;log&#34;
+)
+
+var (
+  samaddr = flag.String(&#34;sam&#34;, &#34;127.0.0.1:7656&#34;, &#34;SAM API address to use&#34;)
+  socksaddr = flag.String(&#34;socks&#34;, &#34;127.0.0.1:7675&#34;, &#34;SOCKS address to use&#34;)
+)
+
+func main() {
+	sam, err := goSam.NewClient(*samaddr)
+	if err != nil {
+		panic(err)
+	}
+	log.Println(&#34;Client Created&#34;)
+
+	// create a transport that uses SAM to dial TCP Connections
+	conf := &amp;socks5.Config{
+		Dial:     sam.DialContext,
+		Resolver: sam,
+	}
+	server, err := socks5.New(conf)
+	if err != nil {
+		panic(err)
+	}
+
+	// Create SOCKS5 proxy on localhost port 8000
+	if err := server.ListenAndServe(&#34;tcp&#34;, *socksaddr); err != nil {
+		panic(err)
+	}
+}
+</code></pre>
+    <h3>
+      .deb package
+    </h3>
+    <p>
+      A package for installing this on Debian is buildable, and a version for Ubuntu
+      is available as a PPA and mirrored via i2p. To build the deb package, from the
+      root of this repository with the build dependencies installed(git, i2p, go,
+      debuild) run the command
+    </p>
+    <pre><code>    debuild -us -uc
+</code></pre>
+    <p>
+      to produce an unsigned deb for personal use only. For packagers,
+    </p>
+    <pre><code>    debuild -S
+</code></pre>
+    <p>
+      will produce a viable source package for use with Launchpad PPA’s and other
+      similar systems.
+    </p>
+    <h3>
+      TODO
+    </h3>
+    <ul>
+      <li>
+        Improve recovery on failed sockets
+      </li>
+      <li>
+        Implement
+        <code>
+          STREAM FORWARD
+        </code>
+      </li>
+      <li>
+        Implement datagrams (Repliable and Anon)
+      </li>
+    </ul>
+    <div>
+      <a href="#show">
+        Show license
+      </a>
+      <div id="show">
+        <div id="hide">
+          <pre><code>The MIT License (MIT)
+
+Copyright (c) 2014 Henry
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+</code></pre>
+          <a href="#hide">
+            Hide license
+          </a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <iframe src="https://snowflake.torproject.org/embed.html" width="320" height="240" frameborder="0" scrolling="no"></iframe>
+    </div>
+  </body>
+</html>
