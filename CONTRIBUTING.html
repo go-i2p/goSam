@@ -1,0 +1,329 @@
+<html>
+  <head>
+    <title>
+      goSam
+    </title>
+    <meta name="author" content="eyedeekay" />
+    <meta name="description" content="goSam" />
+    <meta name="keywords" content="master" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script type="text/javascript" src=""></script>
+  </head>
+  <body>
+    <div id="navbar">
+      <a href="#shownav">
+        Show navigation
+      </a>
+      <div id="shownav">
+        <div id="hidenav">
+          <ul>
+            <li>
+              <a href="index.html">
+                index
+              </a>
+            </li>
+            <li>
+              <a href="CONTRIBUTING.html">
+                CONTRIBUTING
+              </a>
+            </li>
+          </ul>
+          <br>
+          <a href="#hidenav">
+            Hide Navigation
+          </a>
+        </div>
+      </div>
+    </div>
+    <h1>
+      How to make contributions to goSam
+    </h1>
+    <p>
+      Welcome to goSam, the easy-to-use http client for i2p. We’re glad you’re here
+      and interested in contributing. Here’s some help getting started.
+    </p>
+    <h2>
+      Table of Contents
+    </h2>
+    <ul>
+      <li>
+        (1) Environment
+      </li>
+      <li>
+        (2) Testing
+      </li>
+      <li>
+        (3) Filing Issues/Reporting Bugs/Making Suggestions
+      </li>
+      <li>
+        (4) Contributing Code/Style Guide
+        <ul>
+          <li>
+            (a) Adding i2cp and tunnel Options
+          </li>
+          <li>
+            (b) Writing Tests
+          </li>
+          <li>
+            © Style
+          </li>
+          <li>
+            (d) Other kinds of modification?
+          </li>
+        </ul>
+      </li>
+      <li>
+        (5) Conduct
+      </li>
+    </ul>
+    <h3>
+      (1) Environment
+    </h3>
+    <p>
+      goSam is a simple go library. You are free to use an IDE if you wish, but all
+      that is required to build and test the library are a go compiler and the gofmt
+      tool. Git is the version control system. All the files in the library are in a
+      single root directory. Invoking go build from this directory not generate any
+      files.
+    </p>
+    <h3>
+      (2) Testing
+    </h3>
+    <p>
+      Tests are implemented using the standard go “testing” library in files named
+      “file_test.go,” so tests of the client go in client_test.go, name lookups
+      in naming_test.go, et cetera. Everything that can be tested, should be tested.
+    </p>
+    <p>
+      Testing is done by running
+    </p>
+    <pre><code>    go test
+</code></pre>
+    <p>
+      More information about designing tests is below in the
+      <strong>
+        Contributing Code/Style Guide
+      </strong>
+      section below.
+    </p>
+    <h3>
+      (3) Filing issues/Reporting bugs/Making suggestions
+    </h3>
+    <p>
+      If you discover the library doing something you don’t think is right, please let
+      us know! Just filing an issue here is OK.
+    </p>
+    <p>
+      If you need to suggest a feature, we’re happy to hear from you too. Filing an
+      issue will give us a place to discuss how it’s implemented openly and publicly.
+    </p>
+    <p>
+      Please file an issue for your new code contributions in order to provide us with
+      a place to discuss them for inclusion.
+    </p>
+    <h3>
+      (4) Contributing Code/Style Guide
+    </h3>
+    <p>
+      Welcome new coders. We have good news for you, this library is really easy to
+      contribute to. The easiest contributions take the form of i2cp and tunnel
+      options.
+    </p>
+    <h4>
+      (a) Adding i2cp and tunnel Options
+    </h4>
+    <p>
+      First, add a variable to store the state of your new option. For example, the
+      existing variables are in the Client class
+      <a href="https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/client.go#L29" rel="nofollow">
+        here:
+      </a>
+    </p>
+    <p>
+      i2cp and tunnel options are added in a highly uniform process of basically three
+      steps. First, you create a functional argument in the options.go file, in the
+      form:
+    </p>
+    <pre><code>        // SetOPTION sets $OPTION
+        func SetOPTION(arg type) func(*Client) error {  // arg type
+            return func(c *Client) error {              // pass a client to the inner function and declare error return function
+                if arg == valid {                       // validate the argument
+                    c.option = s                        // set the variable to the argument value
+                    return nil                          // if option is set successfully return nil error
+                }
+                return fmt.Errorf(&#34;Invalid argument:&#34; arg) // return a descriptive error if arg is invalid
+            }
+        }
+</code></pre>
+    <p>
+      <a href="https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/options.go#L187" rel="nofollow">
+        example
+      </a>
+    </p>
+    <p>
+      Next, you create a getter which prepares the option. Regardless of the type of
+      option that is set, these must return strings representing valid i2cp options.
+    </p>
+    <pre><code>        //return the OPTION as a string.
+        func (c *Client) option() string {
+            return fmt.Sprintf(&#34;i2cp.option=%d&#34;, c.option)
+        }
+</code></pre>
+    <p>
+      <a href="https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/options.go#L299" rel="nofollow">
+        example
+      </a>
+    </p>
+    <p>
+      Lastly, you’ll need to add it to the allOptions function and the
+      Client.NewClient() function. To add it to allOptions, it looks like this:
+    </p>
+    <pre><code>        //return all options as string ready for passing to sendcmd
+        func (c *Client) allOptions() string {
+            return c.inlength() + &#34; &#34; +
+                c.outlength() + &#34; &#34; +
+                ... //other options removed from example for brevity
+                c.option()
+        }
+</code></pre>
+    <pre><code>        //return all options as string ready for passing to sendcmd
+        func (c *Client) NewClient() (*Client, error) {
+            return NewClientFromOptions(
+                SetHost(c.host),
+                SetPort(c.port),
+                ... //other options removed from example for brevity
+                SetCompression(c.compression),
+                setlastaddr(c.lastaddr),
+                setid(c.id),
+            )
+        }
+</code></pre>
+    <p>
+      <a href="https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/options.go#L333" rel="nofollow">
+        example
+      </a>
+    </p>
+    <h4>
+      (b) Writing Tests
+    </h4>
+    <p>
+      Before the feature can be added, you’ll need to add a test for it to
+      options_test.go. To do this, just add your new option to the long TestOptions
+      functions in options_test.go.
+    </p>
+    <pre><code>        func TestOptionHost(t *testing.T) {
+            client, err := NewClientFromOptions(
+                SetHost(&#34;127.0.0.1&#34;),
+                SetPort(&#34;7656&#34;),
+                ... //other options removed from example for brevity
+                SetCloseIdleTime(300001),
+            )
+            if err != nil {
+                t.Fatalf(&#34;NewClientFromOptions() Error: %q\n&#34;, err)
+            }
+            if result, err := client.validCreate(); err != nil {
+                t.Fatalf(err.Error())
+            } else {
+                t.Log(result)
+            }
+            client.CreateStreamSession(&#34;&#34;)
+            if err := client.Close(); err != nil {
+                t.Fatalf(&#34;client.Close() Error: %q\n&#34;, err)
+            }
+        }
+
+        func TestOptionPortInt(t *testing.T) {
+            client, err := NewClientFromOptions(
+                SetHost(&#34;127.0.0.1&#34;),
+                SetPortInt(7656),
+                ... //other options removed from example for brevity
+                SetUnpublished(true),
+            )
+            if err != nil {
+                t.Fatalf(&#34;NewClientFromOptions() Error: %q\n&#34;, err)
+            }
+            if result, err := client.validCreate(); err != nil {
+                t.Fatalf(err.Error())
+            } else {
+                t.Log(result)
+            }
+            client.CreateStreamSession(&#34;&#34;)
+            if err := client.Close(); err != nil {
+                t.Fatalf(&#34;client.Close() Error: %q\n&#34;, err)
+            }
+        }
+
+</code></pre>
+    <p>
+      If any of these tasks fail, then the test should fail.
+    </p>
+    <h4>
+      © Style
+    </h4>
+    <p>
+      It’s pretty simple to make sure the code style is right, just run gofmt over it
+      to adjust the indentation, and golint over it to ensure that your comments are
+      of the correct form for the documentation generator.
+    </p>
+    <h4>
+      (d) Other kinds of modification?
+    </h4>
+    <p>
+      It may be useful to extend goSam in other ways. Since there’s not a
+      one-size-fits-all uniform way of dealing with these kinds of changes, open an
+      issue for discussion and
+    </p>
+    <h3>
+      (5) Conduct
+    </h3>
+    <p>
+      This is a small-ish, straightforward library intended to enable a clear
+      technical task. We should be able to be civil with eachother, and give and
+      accept criticism contructively and respectfully.
+    </p>
+    <p>
+      This document was drawn from the examples given by Mozilla
+      <a href="mozillascience.github.io/working-open-workshop/contributing/" rel="nofollow">
+        here
+      </a>
+    </p>
+    <div>
+      <a href="#show">
+        Show license
+      </a>
+      <div id="show">
+        <div id="hide">
+          <pre><code>The MIT License (MIT)
+
+Copyright (c) 2014 Henry
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+</code></pre>
+          <a href="#hide">
+            Hide license
+          </a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <iframe src="https://snowflake.torproject.org/embed.html" width="320" height="240" frameborder="0" scrolling="no"></iframe>
+    </div>
+  </body>
+</html>
