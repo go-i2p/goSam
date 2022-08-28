@@ -7,6 +7,7 @@
     <meta name="description" content="goSam" />
     <meta name="keywords" content="master" />
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="showhider.css" />
   </head>
   <body>
     <div id="navbar">
@@ -35,9 +36,10 @@
       </div>
     </div>
     <h1>
-      <a href="/">
-        goSam
+      <a href="#gosam" rel="nofollow">
+        <span></span>
       </a>
+      goSam
     </h1>
     <p>
       A go library for using the
@@ -53,15 +55,20 @@
       has support for all streaming features SAM version 3.2.
     </p>
     <p>
-      This is widely used and easy to use, but thusfar, mostly by me. It sees a lot of
-      testing and no breaking changes to the API are expected.
+      STATUS: This project is maintained. I will respond to issues, pull requests, and feature requests within a few days. I am primarily maintaining functionality. This is widely used and easy to use, but thusfar, mostly by me. It sees a lot of testing and no breaking changes to the API are expected.
     </p>
     <h2>
+      <a href="#installation" rel="nofollow">
+        <span></span>
+      </a>
       Installation
     </h2>
     <pre><code>go get github.com/eyedeekay/goSam
 </code></pre>
     <h2>
+      <a href="#using-it-for-http-transport" rel="nofollow">
+        <span></span>
+      </a>
       Using it for HTTP Transport
     </h2>
     <p>
@@ -72,9 +79,10 @@
       <code>
         net.Dial
       </code>
-      so you can use go’s library packages like http.
+      so you can use go&#39;s library packages like http.
     </p>
-    <pre><code>package main
+    <div>
+      <pre>package main
 
 import (
 	&#34;io&#34;
@@ -125,14 +133,19 @@ func checkErr(err error) {
 	}
 }
 
-</code></pre>
+</pre>
+    </div>
     <h3>
+      <a href="#using-sam-by-default-as-a-proxy-for-all-http-clients-used-by-a-go-application" rel="nofollow">
+        <span></span>
+      </a>
       Using SAM by default, as a proxy for all HTTP Clients used by a Go application
     </h3>
     <p>
       This will make the SAM transport dialer the default for all HTTP clients.
     </p>
-    <pre><code>package main
+    <div>
+      <pre>package main
 
 import (
 	&#34;io&#34;
@@ -165,8 +178,12 @@ func checkErr(err error) {
 		log.Fatal(err)
 	}
 }
-</code></pre>
+</pre>
+    </div>
     <h2>
+      <a href="#using-it-as-a-socks-proxy" rel="nofollow">
+        <span></span>
+      </a>
       Using it as a SOCKS proxy
     </h2>
     <p>
@@ -182,7 +199,8 @@ func checkErr(err error) {
       ,
       making it very easy to implement a SOCKS5 server.
     </p>
-    <pre><code>package main
+    <div>
+      <pre>package main
 
 import (
   &#34;flag&#34;
@@ -219,8 +237,12 @@ func main() {
 		panic(err)
 	}
 }
-</code></pre>
+</pre>
+    </div>
     <h3>
+      <a href="#deb-package" rel="nofollow">
+        <span></span>
+      </a>
       .deb package
     </h3>
     <p>
@@ -237,10 +259,13 @@ func main() {
     <pre><code>    debuild -S
 </code></pre>
     <p>
-      will produce a viable source package for use with Launchpad PPA’s and other
+      will produce a viable source package for use with Launchpad PPA&#39;s and other
       similar systems.
     </p>
     <h3>
+      <a href="#todo" rel="nofollow">
+        <span></span>
+      </a>
       TODO
     </h3>
     <ul>

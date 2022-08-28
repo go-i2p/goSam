@@ -5,8 +5,9 @@ A go library for using the [I2P](https://geti2p.net/en/) Simple Anonymous
 Messaging ([SAM version 3.0](https://geti2p.net/en/docs/api/samv3)) bridge. It
 has support for all streaming features SAM version 3.2.
 
-This is widely used and easy to use, but thusfar, mostly by me. It sees a lot of
-testing and no breaking changes to the API are expected.
+STATUS: This project is maintained. I will respond to issues, pull requests, and feature requests within a few days. I am primarily maintaining functionality. This is widely used and easy to use, but thusfar, mostly by me. It sees a lot of testing and no breaking changes to the API are expected.
+
+
 
 ## Installation
 ```
