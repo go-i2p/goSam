@@ -18,6 +18,11 @@
         <div id="hidenav">
           <ul>
             <li>
+              <a href="..">
+                Up one level ^
+              </a>
+            </li>
+            <li>
               <a href="index.html">
                 index
               </a>
@@ -35,20 +40,17 @@
         </div>
       </div>
     </div>
+    <a id="returnhome" href="/">
+      /
+    </a>
     <h1>
-      <a href="#how-to-make-contributions-to-gosam" rel="nofollow">
-        <span></span>
-      </a>
       How to make contributions to goSam
     </h1>
     <p>
-      Welcome to goSam, the easy-to-use http client for i2p. We&#39;re glad you&#39;re here
-      and interested in contributing. Here&#39;s some help getting started.
+      Welcome to goSam, the easy-to-use http client for i2p. We&rsquo;re glad you&rsquo;re here
+      and interested in contributing. Here&rsquo;s some help getting started.
     </p>
     <h2>
-      <a href="#table-of-contents" rel="nofollow">
-        <span></span>
-      </a>
       Table of Contents
     </h2>
     <ul>
@@ -71,7 +73,7 @@
             (b) Writing Tests
           </li>
           <li>
-            (c) Style
+            &copy; Style
           </li>
           <li>
             (d) Other kinds of modification?
@@ -83,9 +85,6 @@
       </li>
     </ul>
     <h3>
-      <a href="#1-environment" rel="nofollow">
-        <span></span>
-      </a>
       (1) Environment
     </h3>
     <p>
@@ -96,14 +95,11 @@
       files.
     </p>
     <h3>
-      <a href="#2-testing" rel="nofollow">
-        <span></span>
-      </a>
       (2) Testing
     </h3>
     <p>
-      Tests are implemented using the standard go &#34;testing&#34; library in files named
-      &#34;file_test.go,&#34; so tests of the client go in client_test.go, name lookups
+      Tests are implemented using the standard go &ldquo;testing&rdquo; library in files named
+      &ldquo;file_test.go,&rdquo; so tests of the client go in client_test.go, name lookups
       in naming_test.go, et cetera. Everything that can be tested, should be tested.
     </p>
     <p>
@@ -119,27 +115,21 @@
       section below.
     </p>
     <h3>
-      <a href="#3-filing-issues-reporting-bugs-making-suggestions" rel="nofollow">
-        <span></span>
-      </a>
       (3) Filing issues/Reporting bugs/Making suggestions
     </h3>
     <p>
-      If you discover the library doing something you don&#39;t think is right, please let
+      If you discover the library doing something you don&rsquo;t think is right, please let
       us know! Just filing an issue here is OK.
     </p>
     <p>
-      If you need to suggest a feature, we&#39;re happy to hear from you too. Filing an
-      issue will give us a place to discuss how it&#39;s implemented openly and publicly.
+      If you need to suggest a feature, we&rsquo;re happy to hear from you too. Filing an
+      issue will give us a place to discuss how it&rsquo;s implemented openly and publicly.
     </p>
     <p>
       Please file an issue for your new code contributions in order to provide us with
       a place to discuss them for inclusion.
     </p>
     <h3>
-      <a href="#4-contributing-code-style-guide" rel="nofollow">
-        <span></span>
-      </a>
       (4) Contributing Code/Style Guide
     </h3>
     <p>
@@ -148,15 +138,12 @@
       options.
     </p>
     <h4>
-      <a href="#a-adding-i2cp-and-tunnel-options" rel="nofollow">
-        <span></span>
-      </a>
       (a) Adding i2cp and tunnel Options
     </h4>
     <p>
       First, add a variable to store the state of your new option. For example, the
       existing variables are in the Client class
-      <a href="https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/client.go#L29" rel="nofollow">
+      <a href="https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/client.go#L29">
         here:
       </a>
     </p>
@@ -165,21 +152,19 @@
       steps. First, you create a functional argument in the options.go file, in the
       form:
     </p>
-    <div>
-      <pre>        <span>// SetOPTION sets $OPTION</span>
-        <span>func</span> <span>SetOPTION</span><span>(</span><span>arg</span> <span>type</span><span>)</span> <span>func</span><span>(</span><span>*</span><span>Client</span><span>)</span> <span>error</span> <span>{</span>  <span>// arg type</span>
-            <span>return</span> <span>func</span><span>(</span><span>c</span> <span>*</span><span>Client</span><span>)</span> <span>error</span> <span>{</span>              <span>// pass a client to the inner function and declare error return function</span>
-                <span>if</span> <span>arg</span> <span>==</span> <span>valid</span> <span>{</span>                       <span>// validate the argument</span>
-                    <span>c</span><span>.</span><span>option</span> <span>=</span> <span>s</span>                        <span>// set the variable to the argument value</span>
-                    <span>return</span> <span>nil</span>                          <span>// if option is set successfully return nil error</span>
-                <span>}</span>
-                <span>return</span> <span>fmt</span><span>.</span><span>Errorf</span><span>(</span><span>&#34;Invalid argument:&#34;</span> <span>arg</span><span>)</span> <span>// return a descriptive error if arg is invalid</span>
-            <span>}</span>
-        <span>}</span>
-</pre>
-    </div>
+    <pre><code class="language-Go">        // SetOPTION sets $OPTION
+        func SetOPTION(arg type) func(*Client) error {  // arg type
+            return func(c *Client) error {              // pass a client to the inner function and declare error return function
+                if arg == valid {                       // validate the argument
+                    c.option = s                        // set the variable to the argument value
+                    return nil                          // if option is set successfully return nil error
+                }
+                return fmt.Errorf(&quot;Invalid argument:&quot; arg) // return a descriptive error if arg is invalid
+            }
+        }
+</code></pre>
     <p>
-      <a href="https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/options.go#L187" rel="nofollow">
+      <a href="https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/options.go#L187">
         example
       </a>
     </p>
@@ -187,136 +172,116 @@
       Next, you create a getter which prepares the option. Regardless of the type of
       option that is set, these must return strings representing valid i2cp options.
     </p>
-    <div>
-      <pre>        <span>//return the OPTION as a string.</span>
-        <span>func</span> <span>(</span><span>c</span> <span>*</span><span>Client</span><span>)</span> <span>option</span><span>(</span><span>)</span> <span>string</span> <span>{</span>
-            <span>return</span> <span>fmt</span><span>.</span><span>Sprintf</span><span>(</span><span>&#34;i2cp.option=%d&#34;</span><span>,</span> <span>c</span><span>.</span><span>option</span><span>)</span>
-        <span>}</span>
-</pre>
-    </div>
+    <pre><code class="language-Go">        //return the OPTION as a string.
+        func (c *Client) option() string {
+            return fmt.Sprintf(&quot;i2cp.option=%d&quot;, c.option)
+        }
+</code></pre>
     <p>
-      <a href="https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/options.go#L299" rel="nofollow">
+      <a href="https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/options.go#L299">
         example
       </a>
     </p>
     <p>
-      Lastly, you&#39;ll need to add it to the allOptions function and the
+      Lastly, you&rsquo;ll need to add it to the allOptions function and the
       Client.NewClient() function. To add it to allOptions, it looks like this:
     </p>
-    <div>
-      <pre>        <span>//return all options as string ready for passing to sendcmd</span>
-        <span>func</span> <span>(</span><span>c</span> <span>*</span><span>Client</span><span>)</span> <span>allOptions</span><span>(</span><span>)</span> <span>string</span> <span>{</span>
-            <span>return</span> <span>c</span><span>.</span><span>inlength</span><span>(</span><span>)</span> <span>+</span> <span>&#34; &#34;</span> <span>+</span>
-                <span>c</span><span>.</span><span>outlength</span><span>(</span><span>)</span> <span>+</span> <span>&#34; &#34;</span> <span>+</span>
-                <span>...</span> <span>//other options removed from example for brevity</span>
-                <span>c</span><span>.</span><span>option</span><span>(</span><span>)</span>
-        <span>}</span>
-</pre>
-    </div>
-    <div>
-      <pre>        <span>//return all options as string ready for passing to sendcmd</span>
-        <span>func</span> <span>(</span><span>c</span> <span>*</span><span>Client</span><span>)</span> <span>NewClient</span><span>(</span><span>)</span> <span>(</span><span>*</span><span>Client</span><span>,</span> <span>error</span><span>)</span> <span>{</span>
-            <span>return</span> <span>NewClientFromOptions</span><span>(</span>
-                <span>SetHost</span><span>(</span><span>c</span><span>.</span><span>host</span><span>)</span><span>,</span>
-                <span>SetPort</span><span>(</span><span>c</span><span>.</span><span>port</span><span>)</span><span>,</span>
-                <span>...</span> <span>//other options removed from example for brevity</span>
-                <span>SetCompression</span><span>(</span><span>c</span><span>.</span><span>compression</span><span>)</span><span>,</span>
-                <span>setlastaddr</span><span>(</span><span>c</span><span>.</span><span>lastaddr</span><span>)</span><span>,</span>
-                <span>setid</span><span>(</span><span>c</span><span>.</span><span>id</span><span>)</span><span>,</span>
-            <span>)</span>
-        <span>}</span>
-</pre>
-    </div>
+    <pre><code class="language-Go">        //return all options as string ready for passing to sendcmd
+        func (c *Client) allOptions() string {
+            return c.inlength() + &quot; &quot; +
+                c.outlength() + &quot; &quot; +
+                ... //other options removed from example for brevity
+                c.option()
+        }
+</code></pre>
+    <pre><code class="language-Go">        //return all options as string ready for passing to sendcmd
+        func (c *Client) NewClient() (*Client, error) {
+            return NewClientFromOptions(
+                SetHost(c.host),
+                SetPort(c.port),
+                ... //other options removed from example for brevity
+                SetCompression(c.compression),
+                setlastaddr(c.lastaddr),
+                setid(c.id),
+            )
+        }
+</code></pre>
     <p>
-      <a href="https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/options.go#L333" rel="nofollow">
+      <a href="https://github.com/cryptix/goSam/blob/701d7fcf03ddb354262fe213163dcf6f202a24f1/options.go#L333">
         example
       </a>
     </p>
     <h4>
-      <a href="#b-writing-tests" rel="nofollow">
-        <span></span>
-      </a>
       (b) Writing Tests
     </h4>
     <p>
-      Before the feature can be added, you&#39;ll need to add a test for it to
+      Before the feature can be added, you&rsquo;ll need to add a test for it to
       options_test.go. To do this, just add your new option to the long TestOptions
       functions in options_test.go.
     </p>
-    <div>
-      <pre>        <span>func</span> <span>TestOptionHost</span><span>(</span><span>t</span> <span>*</span><span>testing</span><span>.</span><span>T</span><span>)</span> <span>{</span>
-            <span>client</span><span>,</span> <span>err</span> <span>:=</span> <span>NewClientFromOptions</span><span>(</span>
-                <span>SetHost</span><span>(</span><span>&#34;127.0.0.1&#34;</span><span>)</span><span>,</span>
-                <span>SetPort</span><span>(</span><span>&#34;7656&#34;</span><span>)</span><span>,</span>
-                <span>...</span> <span>//other options removed from example for brevity</span>
-                <span>SetCloseIdleTime</span><span>(</span><span>300001</span><span>)</span><span>,</span>
-            <span>)</span>
-            <span>if</span> <span>err</span> <span>!=</span> <span>nil</span> <span>{</span>
-                <span>t</span><span>.</span><span>Fatalf</span><span>(</span><span>&#34;NewClientFromOptions() Error: %q\n&#34;</span><span>,</span> <span>err</span><span>)</span>
-            <span>}</span>
-            <span>if</span> <span>result</span><span>,</span> <span>err</span> <span>:=</span> <span>client</span><span>.</span><span>validCreate</span><span>(</span><span>)</span><span>;</span> <span>err</span> <span>!=</span> <span>nil</span> <span>{</span>
-                <span>t</span><span>.</span><span>Fatalf</span><span>(</span><span>err</span><span>.</span><span>Error</span><span>(</span><span>)</span><span>)</span>
-            <span>}</span> <span>else</span> <span>{</span>
-                <span>t</span><span>.</span><span>Log</span><span>(</span><span>result</span><span>)</span>
-            <span>}</span>
-            <span>client</span><span>.</span><span>CreateStreamSession</span><span>(</span><span>&#34;&#34;</span><span>)</span>
-            <span>if</span> <span>err</span> <span>:=</span> <span>client</span><span>.</span><span>Close</span><span>(</span><span>)</span><span>;</span> <span>err</span> <span>!=</span> <span>nil</span> <span>{</span>
-                <span>t</span><span>.</span><span>Fatalf</span><span>(</span><span>&#34;client.Close() Error: %q\n&#34;</span><span>,</span> <span>err</span><span>)</span>
-            <span>}</span>
-        <span>}</span>
+    <pre><code class="language-Go">        func TestOptionHost(t *testing.T) {
+            client, err := NewClientFromOptions(
+                SetHost(&quot;127.0.0.1&quot;),
+                SetPort(&quot;7656&quot;),
+                ... //other options removed from example for brevity
+                SetCloseIdleTime(300001),
+            )
+            if err != nil {
+                t.Fatalf(&quot;NewClientFromOptions() Error: %q\n&quot;, err)
+            }
+            if result, err := client.validCreate(); err != nil {
+                t.Fatalf(err.Error())
+            } else {
+                t.Log(result)
+            }
+            client.CreateStreamSession(&quot;&quot;)
+            if err := client.Close(); err != nil {
+                t.Fatalf(&quot;client.Close() Error: %q\n&quot;, err)
+            }
+        }
 
-        <span>func</span> <span>TestOptionPortInt</span><span>(</span><span>t</span> <span>*</span><span>testing</span><span>.</span><span>T</span><span>)</span> <span>{</span>
-            <span>client</span><span>,</span> <span>err</span> <span>:=</span> <span>NewClientFromOptions</span><span>(</span>
-                <span>SetHost</span><span>(</span><span>&#34;127.0.0.1&#34;</span><span>)</span><span>,</span>
-                <span>SetPortInt</span><span>(</span><span>7656</span><span>)</span><span>,</span>
-                <span>...</span> <span>//other options removed from example for brevity</span>
-                <span>SetUnpublished</span><span>(</span><span>true</span><span>)</span><span>,</span>
-            <span>)</span>
-            <span>if</span> <span>err</span> <span>!=</span> <span>nil</span> <span>{</span>
-                <span>t</span><span>.</span><span>Fatalf</span><span>(</span><span>&#34;NewClientFromOptions() Error: %q\n&#34;</span><span>,</span> <span>err</span><span>)</span>
-            <span>}</span>
-            <span>if</span> <span>result</span><span>,</span> <span>err</span> <span>:=</span> <span>client</span><span>.</span><span>validCreate</span><span>(</span><span>)</span><span>;</span> <span>err</span> <span>!=</span> <span>nil</span> <span>{</span>
-                <span>t</span><span>.</span><span>Fatalf</span><span>(</span><span>err</span><span>.</span><span>Error</span><span>(</span><span>)</span><span>)</span>
-            <span>}</span> <span>else</span> <span>{</span>
-                <span>t</span><span>.</span><span>Log</span><span>(</span><span>result</span><span>)</span>
-            <span>}</span>
-            <span>client</span><span>.</span><span>CreateStreamSession</span><span>(</span><span>&#34;&#34;</span><span>)</span>
-            <span>if</span> <span>err</span> <span>:=</span> <span>client</span><span>.</span><span>Close</span><span>(</span><span>)</span><span>;</span> <span>err</span> <span>!=</span> <span>nil</span> <span>{</span>
-                <span>t</span><span>.</span><span>Fatalf</span><span>(</span><span>&#34;client.Close() Error: %q\n&#34;</span><span>,</span> <span>err</span><span>)</span>
-            <span>}</span>
-        <span>}</span>
+        func TestOptionPortInt(t *testing.T) {
+            client, err := NewClientFromOptions(
+                SetHost(&quot;127.0.0.1&quot;),
+                SetPortInt(7656),
+                ... //other options removed from example for brevity
+                SetUnpublished(true),
+            )
+            if err != nil {
+                t.Fatalf(&quot;NewClientFromOptions() Error: %q\n&quot;, err)
+            }
+            if result, err := client.validCreate(); err != nil {
+                t.Fatalf(err.Error())
+            } else {
+                t.Log(result)
+            }
+            client.CreateStreamSession(&quot;&quot;)
+            if err := client.Close(); err != nil {
+                t.Fatalf(&quot;client.Close() Error: %q\n&quot;, err)
+            }
+        }
 
-</pre>
-    </div>
+</code></pre>
     <p>
       If any of these tasks fail, then the test should fail.
     </p>
     <h4>
-      <a href="#c-style" rel="nofollow">
-        <span></span>
-      </a>
-      (c) Style
+      &copy; Style
     </h4>
     <p>
-      It&#39;s pretty simple to make sure the code style is right, just run gofmt over it
+      It&rsquo;s pretty simple to make sure the code style is right, just run gofmt over it
       to adjust the indentation, and golint over it to ensure that your comments are
       of the correct form for the documentation generator.
     </p>
     <h4>
-      <a href="#d-other-kinds-of-modification" rel="nofollow">
-        <span></span>
-      </a>
       (d) Other kinds of modification?
     </h4>
     <p>
-      It may be useful to extend goSam in other ways. Since there&#39;s not a
+      It may be useful to extend goSam in other ways. Since there&rsquo;s not a
       one-size-fits-all uniform way of dealing with these kinds of changes, open an
       issue for discussion and
     </p>
     <h3>
-      <a href="#5-conduct" rel="nofollow">
-        <span></span>
-      </a>
       (5) Conduct
     </h3>
     <p>
@@ -326,10 +291,24 @@
     </p>
     <p>
       This document was drawn from the examples given by Mozilla
-      <a href="mozillascience.github.io/working-open-workshop/contributing/" rel="nofollow">
+      <a href="mozillascience.github.io/working-open-workshop/contributing/">
         here
       </a>
     </p>
+    <div id="sourcecode">
+      <span id="sourcehead">
+        <strong>
+          Get the source code:
+        </strong>
+      </span>
+      <ul>
+        <li>
+          <a href="https://github.com/eyedeekay/goSam">
+            Source Repository: (https://github.com/eyedeekay/goSam)
+          </a>
+        </li>
+      </ul>
+    </div>
     <div>
       <a href="#show">
         Show license
