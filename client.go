@@ -213,7 +213,7 @@ func (p *Client) PrivateAddr() i2pkeys.I2PKeys {
 	return keys
 }
 
-//return the combined host:port of the SAM bridge
+// return the combined host:port of the SAM bridge
 func (c *Client) samaddr() string {
 	return fmt.Sprintf("%s:%s", c.host, c.port)
 }

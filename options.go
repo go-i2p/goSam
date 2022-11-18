@@ -6,10 +6,10 @@ import (
 	"strings"
 )
 
-//Option is a client Option
+// Option is a client Option
 type Option func(*Client) error
 
-//SetAddr sets a clients's address in the form host:port or host, port
+// SetAddr sets a clients's address in the form host:port or host, port
 func SetAddr(s ...string) func(*Client) error {
 	return func(c *Client) error {
 		if len(s) == 1 {
@@ -42,7 +42,7 @@ func SetAddr(s ...string) func(*Client) error {
 	}
 }
 
-//SetAddrMixed sets a clients's address in the form host, port(int)
+// SetAddrMixed sets a clients's address in the form host, port(int)
 func SetAddrMixed(s string, i int) func(*Client) error {
 	return func(c *Client) error {
 		if i < 65536 && i > 0 {
@@ -54,7 +54,7 @@ func SetAddrMixed(s string, i int) func(*Client) error {
 	}
 }
 
-//SetHost sets the host of the client's SAM bridge
+// SetHost sets the host of the client's SAM bridge
 func SetHost(s string) func(*Client) error {
 	return func(c *Client) error {
 		c.host = s
@@ -62,7 +62,7 @@ func SetHost(s string) func(*Client) error {
 	}
 }
 
-//SetUser sets the username for authentication during the SAM HELLO phase
+// SetUser sets the username for authentication during the SAM HELLO phase
 func SetUser(s string) func(*Client) error {
 	return func(c *Client) error {
 		c.user = s
@@ -70,7 +70,7 @@ func SetUser(s string) func(*Client) error {
 	}
 }
 
-//SetUser sets the password for authentication during the SAM HELLO phase
+// SetUser sets the password for authentication during the SAM HELLO phase
 func SetPass(s string) func(*Client) error {
 	return func(c *Client) error {
 		c.pass = s
@@ -104,8 +104,8 @@ func SetSAMMaxVersion(i int) func(*Client) error {
 	}
 }
 
-//SetLocalDestination sets the local destination of the tunnel from a private
-//key
+// SetLocalDestination sets the local destination of the tunnel from a private
+// key
 func SetLocalDestination(s string) func(*Client) error {
 	return func(c *Client) error {
 		c.destination = s
@@ -120,7 +120,7 @@ func setid(s int32) func(*Client) error {
 	}
 }
 
-//SetPort sets the port of the client's SAM bridge using a string
+// SetPort sets the port of the client's SAM bridge using a string
 func SetPort(s string) func(*Client) error {
 	return func(c *Client) error {
 		port, err := strconv.Atoi(s)
@@ -135,7 +135,7 @@ func SetPort(s string) func(*Client) error {
 	}
 }
 
-//SetPortInt sets the port of the client's SAM bridge using a string
+// SetPortInt sets the port of the client's SAM bridge using a string
 func SetPortInt(i int) func(*Client) error {
 	return func(c *Client) error {
 		if i < 65536 && i > -1 {
@@ -146,7 +146,7 @@ func SetPortInt(i int) func(*Client) error {
 	}
 }
 
-//SetFromPort sets the port of the client's SAM bridge using a string
+// SetFromPort sets the port of the client's SAM bridge using a string
 func SetFromPort(s string) func(*Client) error {
 	return func(c *Client) error {
 		port, err := strconv.Atoi(s)
@@ -161,7 +161,7 @@ func SetFromPort(s string) func(*Client) error {
 	}
 }
 
-//SetFromPortInt sets the port of the client's SAM bridge using a string
+// SetFromPortInt sets the port of the client's SAM bridge using a string
 func SetFromPortInt(i int) func(*Client) error {
 	return func(c *Client) error {
 		if i < 65536 && i > -1 {
@@ -172,7 +172,7 @@ func SetFromPortInt(i int) func(*Client) error {
 	}
 }
 
-//SetToPort sets the port of the client's SAM bridge using a string
+// SetToPort sets the port of the client's SAM bridge using a string
 func SetToPort(s string) func(*Client) error {
 	return func(c *Client) error {
 		port, err := strconv.Atoi(s)
@@ -187,7 +187,7 @@ func SetToPort(s string) func(*Client) error {
 	}
 }
 
-//SetToPortInt sets the port of the client's SAM bridge using a string
+// SetToPortInt sets the port of the client's SAM bridge using a string
 func SetToPortInt(i int) func(*Client) error {
 	return func(c *Client) error {
 		if i < 65536 && i > -1 {
@@ -198,7 +198,7 @@ func SetToPortInt(i int) func(*Client) error {
 	}
 }
 
-//SetDebug enables debugging messages
+// SetDebug enables debugging messages
 func SetDebug(b bool) func(*Client) error {
 	return func(c *Client) error {
 		//c.debug = b
@@ -207,7 +207,7 @@ func SetDebug(b bool) func(*Client) error {
 	}
 }
 
-//SetInLength sets the number of hops inbound
+// SetInLength sets the number of hops inbound
 func SetInLength(u uint) func(*Client) error {
 	return func(c *Client) error {
 		if u < 7 {
@@ -218,7 +218,7 @@ func SetInLength(u uint) func(*Client) error {
 	}
 }
 
-//SetOutLength sets the number of hops outbound
+// SetOutLength sets the number of hops outbound
 func SetOutLength(u uint) func(*Client) error {
 	return func(c *Client) error {
 		if u < 7 {
@@ -229,7 +229,7 @@ func SetOutLength(u uint) func(*Client) error {
 	}
 }
 
-//SetInVariance sets the variance of a number of hops inbound
+// SetInVariance sets the variance of a number of hops inbound
 func SetInVariance(i int) func(*Client) error {
 	return func(c *Client) error {
 		if i < 7 && i > -7 {
@@ -240,7 +240,7 @@ func SetInVariance(i int) func(*Client) error {
 	}
 }
 
-//SetOutVariance sets the variance of a number of hops outbound
+// SetOutVariance sets the variance of a number of hops outbound
 func SetOutVariance(i int) func(*Client) error {
 	return func(c *Client) error {
 		if i < 7 && i > -7 {
@@ -251,7 +251,7 @@ func SetOutVariance(i int) func(*Client) error {
 	}
 }
 
-//SetInQuantity sets the inbound tunnel quantity
+// SetInQuantity sets the inbound tunnel quantity
 func SetInQuantity(u uint) func(*Client) error {
 	return func(c *Client) error {
 		if u <= 16 {
@@ -262,7 +262,7 @@ func SetInQuantity(u uint) func(*Client) error {
 	}
 }
 
-//SetOutQuantity sets the outbound tunnel quantity
+// SetOutQuantity sets the outbound tunnel quantity
 func SetOutQuantity(u uint) func(*Client) error {
 	return func(c *Client) error {
 		if u <= 16 {
@@ -273,7 +273,7 @@ func SetOutQuantity(u uint) func(*Client) error {
 	}
 }
 
-//SetInBackups sets the inbound tunnel backups
+// SetInBackups sets the inbound tunnel backups
 func SetInBackups(u uint) func(*Client) error {
 	return func(c *Client) error {
 		if u < 6 {
@@ -284,7 +284,7 @@ func SetInBackups(u uint) func(*Client) error {
 	}
 }
 
-//SetOutBackups sets the inbound tunnel backups
+// SetOutBackups sets the inbound tunnel backups
 func SetOutBackups(u uint) func(*Client) error {
 	return func(c *Client) error {
 		if u < 6 {
@@ -295,7 +295,7 @@ func SetOutBackups(u uint) func(*Client) error {
 	}
 }
 
-//SetUnpublished tells the router to not publish the client leaseset
+// SetUnpublished tells the router to not publish the client leaseset
 func SetUnpublished(b bool) func(*Client) error {
 	return func(c *Client) error {
 		c.dontPublishLease = b
@@ -303,7 +303,7 @@ func SetUnpublished(b bool) func(*Client) error {
 	}
 }
 
-//SetEncrypt tells the router to use an encrypted leaseset
+// SetEncrypt tells the router to use an encrypted leaseset
 func SetEncrypt(b bool) func(*Client) error {
 	return func(c *Client) error {
 		c.encryptLease = b
@@ -311,8 +311,8 @@ func SetEncrypt(b bool) func(*Client) error {
 	}
 }
 
-//SetLeaseSetEncType tells the router to use an encrypted leaseset of a specific type.
-//defaults to 4,0
+// SetLeaseSetEncType tells the router to use an encrypted leaseset of a specific type.
+// defaults to 4,0
 func SetLeaseSetEncType(b string) func(*Client) error {
 	return func(c *Client) error {
 		c.leaseSetEncType = b
@@ -320,7 +320,7 @@ func SetLeaseSetEncType(b string) func(*Client) error {
 	}
 }
 
-//SetReduceIdle sets the created tunnels to be reduced during extended idle time to avoid excessive resource usage
+// SetReduceIdle sets the created tunnels to be reduced during extended idle time to avoid excessive resource usage
 func SetReduceIdle(b bool) func(*Client) error {
 	return func(c *Client) error {
 		c.reduceIdle = b
@@ -328,7 +328,7 @@ func SetReduceIdle(b bool) func(*Client) error {
 	}
 }
 
-//SetReduceIdleTime sets time to wait before the tunnel quantity is reduced
+// SetReduceIdleTime sets time to wait before the tunnel quantity is reduced
 func SetReduceIdleTime(u uint) func(*Client) error {
 	return func(c *Client) error {
 		if u > 299999 {
@@ -339,7 +339,7 @@ func SetReduceIdleTime(u uint) func(*Client) error {
 	}
 }
 
-//SetReduceIdleQuantity sets number of tunnels to keep alive during an extended idle period
+// SetReduceIdleQuantity sets number of tunnels to keep alive during an extended idle period
 func SetReduceIdleQuantity(u uint) func(*Client) error {
 	return func(c *Client) error {
 		if u < 5 {
@@ -350,7 +350,7 @@ func SetReduceIdleQuantity(u uint) func(*Client) error {
 	}
 }
 
-//SetCloseIdle sets the tunnels to close after a specific amount of time
+// SetCloseIdle sets the tunnels to close after a specific amount of time
 func SetCloseIdle(b bool) func(*Client) error {
 	return func(c *Client) error {
 		c.closeIdle = b
@@ -358,7 +358,7 @@ func SetCloseIdle(b bool) func(*Client) error {
 	}
 }
 
-//SetCloseIdleTime sets the time in milliseconds to wait before closing tunnels
+// SetCloseIdleTime sets the time in milliseconds to wait before closing tunnels
 func SetCloseIdleTime(u uint) func(*Client) error {
 	return func(c *Client) error {
 		if u > 299999 {
@@ -369,7 +369,7 @@ func SetCloseIdleTime(u uint) func(*Client) error {
 	}
 }
 
-//SetCompression sets the tunnels to close after a specific amount of time
+// SetCompression sets the tunnels to close after a specific amount of time
 func SetCompression(b bool) func(*Client) error {
 	return func(c *Client) error {
 		c.compression = b
@@ -379,13 +379,15 @@ func SetCompression(b bool) func(*Client) error {
 
 /* SAM v 3.1 Options*/
 
-//SetSignatureType tells gosam to pass SAM a signature_type parameter with one
+// SetSignatureType tells gosam to pass SAM a signature_type parameter with one
 // of the following values:
-//    "SIGNATURE_TYPE=DSA_SHA1",
-//    "SIGNATURE_TYPE=ECDSA_SHA256_P256",
-//    "SIGNATURE_TYPE=ECDSA_SHA384_P384",
-//    "SIGNATURE_TYPE=ECDSA_SHA512_P521",
-//    "SIGNATURE_TYPE=EdDSA_SHA512_Ed25519",
+//
+//	"SIGNATURE_TYPE=DSA_SHA1",
+//	"SIGNATURE_TYPE=ECDSA_SHA256_P256",
+//	"SIGNATURE_TYPE=ECDSA_SHA384_P384",
+//	"SIGNATURE_TYPE=ECDSA_SHA512_P521",
+//	"SIGNATURE_TYPE=EdDSA_SHA512_Ed25519",
+//
 // or an empty string
 func SetSignatureType(s string) func(*Client) error {
 	return func(c *Client) error {
@@ -403,7 +405,7 @@ func SetSignatureType(s string) func(*Client) error {
 	}
 }
 
-//return the from port as a string.
+// return the from port as a string.
 func (c *Client) from() string {
 	if c.fromport == "FROM_PORT=0" {
 		return ""
@@ -417,7 +419,7 @@ func (c *Client) from() string {
 	return fmt.Sprintf(" FROM_PORT=%v ", c.fromport)
 }
 
-//return the to port as a string.
+// return the to port as a string.
 func (c *Client) to() string {
 	if c.fromport == "TO_PORT=0" {
 		return ""
@@ -431,47 +433,47 @@ func (c *Client) to() string {
 	return fmt.Sprintf(" TO_PORT=%v ", c.toport)
 }
 
-//return the signature type as a string.
+// return the signature type as a string.
 func (c *Client) sigtype() string {
 	return fmt.Sprintf(" %s ", c.sigType)
 }
 
-//return the inbound length as a string.
+// return the inbound length as a string.
 func (c *Client) inlength() string {
 	return fmt.Sprintf(" inbound.length=%d ", c.inLength)
 }
 
-//return the outbound length as a string.
+// return the outbound length as a string.
 func (c *Client) outlength() string {
 	return fmt.Sprintf(" outbound.length=%d ", c.outLength)
 }
 
-//return the inbound length variance as a string.
+// return the inbound length variance as a string.
 func (c *Client) invariance() string {
 	return fmt.Sprintf(" inbound.lengthVariance=%d ", c.inVariance)
 }
 
-//return the outbound length variance as a string.
+// return the outbound length variance as a string.
 func (c *Client) outvariance() string {
 	return fmt.Sprintf(" outbound.lengthVariance=%d ", c.outVariance)
 }
 
-//return the inbound tunnel quantity as a string.
+// return the inbound tunnel quantity as a string.
 func (c *Client) inquantity() string {
 	return fmt.Sprintf(" inbound.quantity=%d ", c.inQuantity)
 }
 
-//return the outbound tunnel quantity as a string.
+// return the outbound tunnel quantity as a string.
 func (c *Client) outquantity() string {
 	return fmt.Sprintf(" outbound.quantity=%d ", c.outQuantity)
 }
 
-//return the inbound tunnel quantity as a string.
+// return the inbound tunnel quantity as a string.
 func (c *Client) inbackups() string {
 	return fmt.Sprintf(" inbound.backupQuantity=%d ", c.inQuantity)
 }
 
-//return the outbound tunnel quantity as a string.
+// return the outbound tunnel quantity as a string.
 func (c *Client) outbackups() string {
 	return fmt.Sprintf(" outbound.backupQuantity=%d ", c.outQuantity)
 }
@@ -530,7 +532,7 @@ func (c *Client) compresion() string {
 	return " i2cp.gzip=false "
 }
 
-//return all options as string ready for passing to sendcmd
+// return all options as string ready for passing to sendcmd
 func (c *Client) allOptions() string {
 	return c.inlength() +
 		c.outlength() +
@@ -551,7 +553,7 @@ func (c *Client) allOptions() string {
 		c.compresion()
 }
 
-//Print return all options as string
+// Print return all options as string
 func (c *Client) Print() string {
 	return c.inlength() +
 		c.outlength() +
