@@ -1,8 +1,6 @@
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/eyedeekay/i2pkeys v0.0.0-20220310052025-204d4ae6dcae h1:SwegHeaf4pkDMB24UltIvJlj2+nd06QUZAbs8BDyfjM=
-github.com/eyedeekay/i2pkeys v0.0.0-20220310052025-204d4ae6dcae/go.mod h1:W9KCm9lqZ+Ozwl3dwcgnpPXAML97+I8Jiht7o5A8YBM=
 github.com/eyedeekay/i2pkeys v0.0.0-20220310055120-b97558c06ac8 h1:9QLD6ZWn1Evc0bT971aArjkit94+s5FMc2stDfEpen4=
 github.com/eyedeekay/i2pkeys v0.0.0-20220310055120-b97558c06ac8/go.mod h1:W9KCm9lqZ+Ozwl3dwcgnpPXAML97+I8Jiht7o5A8YBM=
 github.com/getlantern/context v0.0.0-20190109183933-c447772a6520 h1:NRUJuo3v3WGC/g5YiyF790gut6oQr5f3FBI88Wv0dx4=
