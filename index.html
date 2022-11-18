@@ -18,6 +18,11 @@
         <div id="hidenav">
           <ul>
             <li>
+              <a href="..">
+                Up one level ^
+              </a>
+            </li>
+            <li>
               <a href="index.html">
                 index
               </a>
@@ -35,20 +40,20 @@
         </div>
       </div>
     </div>
+    <a id="returnhome" href="/">
+      /
+    </a>
     <h1>
-      <a href="#gosam" rel="nofollow">
-        <span></span>
-      </a>
       goSam
     </h1>
     <p>
       A go library for using the
-      <a href="https://geti2p.net/en/" rel="nofollow">
+      <a href="https://geti2p.net/en/">
         I2P
       </a>
       Simple Anonymous
       Messaging (
-      <a href="https://geti2p.net/en/docs/api/samv3" rel="nofollow">
+      <a href="https://geti2p.net/en/docs/api/samv3">
         SAM version 3.0
       </a>
       ) bridge. It
@@ -58,17 +63,11 @@
       STATUS: This project is maintained. I will respond to issues, pull requests, and feature requests within a few days. I am primarily maintaining functionality. This is widely used and easy to use, but thusfar, mostly by me. It sees a lot of testing and no breaking changes to the API are expected.
     </p>
     <h2>
-      <a href="#installation" rel="nofollow">
-        <span></span>
-      </a>
       Installation
     </h2>
     <pre><code>go get github.com/eyedeekay/goSam
 </code></pre>
     <h2>
-      <a href="#using-it-for-http-transport" rel="nofollow">
-        <span></span>
-      </a>
       Using it for HTTP Transport
     </h2>
     <p>
@@ -79,18 +78,17 @@
       <code>
         net.Dial
       </code>
-      so you can use go&#39;s library packages like http.
+      so you can use go&rsquo;s library packages like http.
     </p>
-    <div>
-      <pre>package main
+    <pre><code class="language-go">package main
 
 import (
-	&#34;io&#34;
-	&#34;log&#34;
-	&#34;net/http&#34;
-	&#34;os&#34;
+	&quot;io&quot;
+	&quot;log&quot;
+	&quot;net/http&quot;
+	&quot;os&quot;
 
-	&#34;github.com/cryptix/goSam&#34;
+	&quot;github.com/cryptix/goSam&quot;
 )
 
 func main() {
@@ -98,7 +96,7 @@ func main() {
 	sam, err := goSam.NewDefaultClient()
 	checkErr(err)
 
-	log.Println(&#34;Client Created&#34;)
+	log.Println(&quot;Client Created&quot;)
 
 	// create a transport that uses SAM to dial TCP Connections
 	tr := &amp;http.Transport{
@@ -109,14 +107,14 @@ func main() {
 	client := &amp;http.Client{Transport: tr}
 
 	// send a get request
-	resp, err := client.Get(&#34;http://stats.i2p/&#34;)
+	resp, err := client.Get(&quot;http://stats.i2p/&quot;)
 	checkErr(err)
 	defer resp.Body.Close()
 
-	log.Printf(&#34;Get returned %+v\n&#34;, resp)
+	log.Printf(&quot;Get returned %+v\n&quot;, resp)
 
 	// create a file for the response
-	file, err := os.Create(&#34;stats.html&#34;)
+	file, err := os.Create(&quot;stats.html&quot;)
 	checkErr(err)
 	defer file.Close()
 
@@ -124,7 +122,7 @@ func main() {
 	_, err = io.Copy(file, resp.Body)
 	checkErr(err)
 
-	log.Println(&#34;Done.&#34;)
+	log.Println(&quot;Done.&quot;)
 }
 
 func checkErr(err error) {
@@ -133,34 +131,29 @@ func checkErr(err error) {
 	}
 }
 
-</pre>
-    </div>
+</code></pre>
     <h3>
-      <a href="#using-sam-by-default-as-a-proxy-for-all-http-clients-used-by-a-go-application" rel="nofollow">
-        <span></span>
-      </a>
       Using SAM by default, as a proxy for all HTTP Clients used by a Go application
     </h3>
     <p>
       This will make the SAM transport dialer the default for all HTTP clients.
     </p>
-    <div>
-      <pre>package main
+    <pre><code class="language-go">package main
 
 import (
-	&#34;io&#34;
-	&#34;log&#34;
-	&#34;net/http&#34;
-	&#34;os&#34;
+	&quot;io&quot;
+	&quot;log&quot;
+	&quot;net/http&quot;
+	&quot;os&quot;
 
-	&#34;github.com/cryptix/goSam&#34;
+	&quot;github.com/cryptix/goSam&quot;
 )
 
 func main() {
 	sam, err := goSam.NewDefaultClient()
 	checkErr(err)
 
-	log.Println(&#34;Client Created&#34;)
+	log.Println(&quot;Client Created&quot;)
 
 	// create a transport that uses SAM to dial TCP Connections
 	httpClient := &amp;http.Client{
@@ -178,12 +171,8 @@ func checkErr(err error) {
 		log.Fatal(err)
 	}
 }
-</pre>
-    </div>
+</code></pre>
     <h2>
-      <a href="#using-it-as-a-socks-proxy" rel="nofollow">
-        <span></span>
-      </a>
       Using it as a SOCKS proxy
     </h2>
     <p>
@@ -191,7 +180,7 @@ func checkErr(err error) {
         client
       </code>
       also implements a resolver compatible with
-      <a href="https://github.com/getlantern/go-socks5" rel="nofollow">
+      <a href="https://github.com/getlantern/go-socks5">
         <code>
           getlantern/go-socks5
         </code>
@@ -199,20 +188,19 @@ func checkErr(err error) {
       ,
       making it very easy to implement a SOCKS5 server.
     </p>
-    <div>
-      <pre>package main
+    <pre><code class="language-go">package main
 
 import (
-  &#34;flag&#34;
+  &quot;flag&quot;
 
-	&#34;github.com/eyedeekay/goSam&#34;
-	&#34;github.com/getlantern/go-socks5&#34;
-	&#34;log&#34;
+	&quot;github.com/eyedeekay/goSam&quot;
+	&quot;github.com/getlantern/go-socks5&quot;
+	&quot;log&quot;
 )
 
 var (
-  samaddr = flag.String(&#34;sam&#34;, &#34;127.0.0.1:7656&#34;, &#34;SAM API address to use&#34;)
-  socksaddr = flag.String(&#34;socks&#34;, &#34;127.0.0.1:7675&#34;, &#34;SOCKS address to use&#34;)
+  samaddr = flag.String(&quot;sam&quot;, &quot;127.0.0.1:7656&quot;, &quot;SAM API address to use&quot;)
+  socksaddr = flag.String(&quot;socks&quot;, &quot;127.0.0.1:7675&quot;, &quot;SOCKS address to use&quot;)
 )
 
 func main() {
@@ -220,7 +208,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	log.Println(&#34;Client Created&#34;)
+	log.Println(&quot;Client Created&quot;)
 
 	// create a transport that uses SAM to dial TCP Connections
 	conf := &amp;socks5.Config{
@@ -233,16 +221,12 @@ func main() {
 	}
 
 	// Create SOCKS5 proxy on localhost port 8000
-	if err := server.ListenAndServe(&#34;tcp&#34;, *socksaddr); err != nil {
+	if err := server.ListenAndServe(&quot;tcp&quot;, *socksaddr); err != nil {
 		panic(err)
 	}
 }
-</pre>
-    </div>
+</code></pre>
     <h3>
-      <a href="#deb-package" rel="nofollow">
-        <span></span>
-      </a>
       .deb package
     </h3>
     <p>
@@ -259,13 +243,10 @@ func main() {
     <pre><code>    debuild -S
 </code></pre>
     <p>
-      will produce a viable source package for use with Launchpad PPA&#39;s and other
+      will produce a viable source package for use with Launchpad PPA&rsquo;s and other
       similar systems.
     </p>
     <h3>
-      <a href="#todo" rel="nofollow">
-        <span></span>
-      </a>
       TODO
     </h3>
     <ul>
@@ -282,6 +263,20 @@ func main() {
         Implement datagrams (Repliable and Anon)
       </li>
     </ul>
+    <div id="sourcecode">
+      <span id="sourcehead">
+        <strong>
+          Get the source code:
+        </strong>
+      </span>
+      <ul>
+        <li>
+          <a href="https://github.com/eyedeekay/goSam">
+            Source Repository: (https://github.com/eyedeekay/goSam)
+          </a>
+        </li>
+      </ul>
+    </div>
     <div>
       <a href="#show">
         Show license
