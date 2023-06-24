@@ -27,7 +27,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/cryptix/goSam"
+	"github.com/eyedeekay/goSam"
 )
 
 func main() {
@@ -85,7 +85,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/cryptix/goSam"
+	"github.com/eyedeekay/goSam"
 )
 
 func main() {
