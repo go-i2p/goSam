@@ -13,7 +13,7 @@ import (
 	//"log"
 	"net/http"
 	//"github.com/eyedeekay/sam3/helper"
-	//"github.com/eyedeekay/sam3/i2pkeys"
+	//"github.com/eyedeekay/i2pkeys"
 )
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
