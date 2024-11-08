@@ -1,4 +1,4 @@
-module github.com/eyedeekay/goSam
+module github.com/go-i2p/gosam
 
 go 1.20
 
