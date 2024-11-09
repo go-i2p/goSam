@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/eyedeekay/goSam"
+	"github.com/go-i2p/goSam"
 )
 
 /**

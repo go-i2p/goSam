@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/eyedeekay/goSam"
+	"github.com/go-i2p/goSam"
 	"github.com/getlantern/go-socks5"
 	"log"
 )

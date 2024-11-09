@@ -12,8 +12,8 @@ import (
 	//	"time"
 	//"log"
 	"net/http"
-	//"github.com/eyedeekay/sam3/helper"
-	//"github.com/eyedeekay/i2pkeys"
+	//"github.com/go-i2p/sam3/helper"
+	//"github.com/go-i2p/i2pkeys"
 )
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {

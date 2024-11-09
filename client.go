@@ -14,8 +14,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/eyedeekay/i2pkeys"
-	//samkeys "github.com/eyedeekay/goSam/compat"
+	"github.com/go-i2p/i2pkeys"
+	//samkeys "github.com/go-i2p/goSam/compat"
 )
 
 // A Client represents a single Connection to the SAM bridge
