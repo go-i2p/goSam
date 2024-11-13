@@ -1,7 +1,7 @@
 //go:build nettest
 // +build nettest
 
-package goSam
+package gosam
 
 import (
 	"fmt"

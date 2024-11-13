@@ -1,4 +1,4 @@
-package goSam
+package gosam
 
 import (
 	"testing"

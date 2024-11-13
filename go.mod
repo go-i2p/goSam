@@ -3,8 +3,8 @@ module github.com/go-i2p/gosam
 go 1.20
 
 require (
-	github.com/eyedeekay/i2pkeys v0.33.0
 	github.com/getlantern/go-socks5 v0.0.0-20171114193258-79d4dd3e2db5
+	github.com/go-i2p/i2pkeys v0.0.0-20241108200332-e4f5ccdff8c4
 )
 
 require (
@@ -18,7 +18,9 @@ require (
 	github.com/getlantern/ops v0.0.0-20200403153110-8476b16edcd6 // indirect
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/oxtoacart/bpool v0.0.0-20190530202638-03653db5a59c // indirect
+	github.com/sirupsen/logrus v1.9.3 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
 	go.uber.org/zap v1.19.1 // indirect
+	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
 )

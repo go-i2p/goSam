@@ -1,1 +1,1 @@
-package goSam
+package gosam

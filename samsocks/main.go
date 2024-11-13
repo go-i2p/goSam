@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/go-i2p/goSam"
+	"github.com/go-i2p/gosam"
 	"github.com/getlantern/go-socks5"
 	"log"
 )
@@ -14,7 +14,7 @@ var (
 )
 
 func main() {
-	sam, err := goSam.NewClient(*samaddr)
+	sam, err := gosam.NewClient(*samaddr)
 	if err != nil {
 		panic(err)
 	}

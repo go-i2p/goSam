@@ -4,22 +4,22 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/go-i2p/goSam"
+	"github.com/go-i2p/gosam"
 )
 
 /**
-THIS is a freestanding test for SAMv3.2 AUTH commands using goSam. It's
+THIS is a freestanding test for SAMv3.2 AUTH commands using gosam. It's
 intended to be run separate from the other tests so that you don't accidentally end
 up setting SAM session passwords and leaving them in the PasswordManager if a test
 fails for some reason before you can remove them.
 **/
 
 func main() {
-	client, err := goSam.NewClientFromOptions()
+	client, err := gosam.NewClientFromOptions()
 	if err != nil {
-		client, err = goSam.NewClientFromOptions(
-			goSam.SetUser("user"),
-			goSam.SetPass("password"),
+		client, err = gosam.NewClientFromOptions(
+			gosam.SetUser("user"),
+			gosam.SetPass("password"),
 		)
 		fmt.Println("Looks like you restarted the I2P router before sending AUTH DISABLE.")
 		fmt.Println("This probably means that your SAM Bridge is in a broken state where it can't")
@@ -36,7 +36,7 @@ func main() {
 	if err != nil {
 		log.Println(err)
 	}
-	client2, err := goSam.NewDefaultClient()
+	client2, err := gosam.NewDefaultClient()
 	if err != nil {
 		log.Println(err)
 	}

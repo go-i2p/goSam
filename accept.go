@@ -1,4 +1,4 @@
-package goSam
+package gosam
 
 import (
 	"fmt"
@@ -44,7 +44,7 @@ func (c *Client) ListenI2P(dest string) (net.Listener, error) {
 	return c, nil
 }
 
-// Accept accepts a connection on a listening goSam.Client(Implements net.Listener)
+// Accept accepts a connection on a listening gosam.Client(Implements net.Listener)
 // or, if the connection isn't listening yet, just calls AcceptI2P for compatibility
 // with older versions.
 func (c *Client) Accept() (net.Conn, error) {
