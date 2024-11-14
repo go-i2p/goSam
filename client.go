@@ -56,7 +56,7 @@ type Client struct {
 	closeIdle     bool
 	closeIdleTime uint
 
-	compression bool
+	compress bool
 
 	debug bool
 	mutex sync.Mutex
@@ -280,7 +280,7 @@ func (c *Client) NewClient(id int32) (*Client, error) {
 		SetReduceIdleQuantity(c.reduceIdleQuantity),
 		SetCloseIdle(c.closeIdle),
 		SetCloseIdleTime(c.closeIdleTime),
-		SetCompression(c.compression),
+		SetCompression(c.compress),
 		setid(id),
 	)
 }

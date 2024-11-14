@@ -82,7 +82,7 @@ func TestParseReplyValidCases(t *testing.T) {
 		}
 
 		if len(parsed.Pairs) != len(tcase.Expected.Pairs) {
-			t.Fatalf("Wrong ammount of Pairs. Got %d expected 3", len(parsed.Pairs))
+			t.Fatalf("Wrong amount of Pairs. Got %d expected 3", len(parsed.Pairs))
 		}
 
 		for expK, expV := range tcase.Expected.Pairs {
