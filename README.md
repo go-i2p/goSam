@@ -7,11 +7,11 @@ has support for all streaming features SAM version 3.2.
 
 STATUS: This project is maintained. I will respond to issues, pull requests, and feature requests within a few days. I am primarily maintaining functionality. This is widely used and easy to use, but thusfar, mostly by me. It sees a lot of testing and no breaking changes to the API are expected.
 
-
+[![Go Report Card](https://goreportcard.com/badge/github.com/go-i2p/gosam)](https://goreportcard.com/report/github.com/go-i2p/gosam)
 
 ## Installation
 ```
-go get github.com/eyedeekay/goSam
+go get github.com/go-i2p/gosam
 ```
 
 ## Using it for HTTP Transport
@@ -27,7 +27,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/eyedeekay/goSam"
+	"github.com/go-i2p/gosam"
 )
 
 func main() {
@@ -85,7 +85,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/eyedeekay/goSam"
+	"github.com/go-i2p/gosam"
 )
 
 func main() {
@@ -124,7 +124,7 @@ package main
 import (
   "flag"
 
-	"github.com/eyedeekay/goSam"
+	"github.com/go-i2p/gosam"
 	"github.com/getlantern/go-socks5"
 	"log"
 )
