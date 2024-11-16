@@ -1,5 +1,5 @@
 
-USER_GH=eyedeekay
+USER_GH=go-i2p
 VERSION=0.32.8
 packagename=gosam
 
