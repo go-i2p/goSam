@@ -1,6 +1,6 @@
 
 USER_GH=go-i2p
-VERSION=0.32.8
+VERSION=0.32.9
 packagename=gosam
 
 echo: fmt
