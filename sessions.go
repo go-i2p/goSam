@@ -1,7 +1,7 @@
 package gosam
 
 import (
-	"fmt"
+
 	//	"math"
 	"math/rand"
 	"time"
@@ -33,13 +33,7 @@ func (c *Client) CreateSession(style, dest string) (string, error) {
 		return "", err
 	}
 
-	// TODO: move check into sendCmd()
-	if r.Topic != "SESSION" || r.Type != "STATUS" {
-		return "", fmt.Errorf("Session Unknown Reply: %+v\n", r)
-	}
-
-	result := r.Pairs["RESULT"]
-	if result != "OK" {
+	if !r.IsOk() {
 		return "", ReplyError{ResultKeyNotFound, r}
 	}
 	c.destination = r.Pairs["DESTINATION"]

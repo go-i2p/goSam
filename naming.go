@@ -15,14 +15,8 @@ func (c *Client) Lookup(name string) (string, error) {
 		return "", nil
 	}
 
-	// TODO: move check into sendCmd()
-	if r.Topic != "NAMING" || r.Type != "REPLY" {
-		return "", fmt.Errorf("Naming Unknown Reply: %s, %s\n", r.Topic, r.Type)
-	}
-
-	result := r.Pairs["RESULT"]
-	if result != "OK" {
-		return "", ReplyError{result, r}
+	if !r.IsOk() {
+		return "", ReplyError{r.GetResult(), r}
 	}
 
 	if r.Pairs["NAME"] != name {

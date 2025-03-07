@@ -38,6 +38,21 @@ type Reply struct {
 	Pairs map[string]string
 }
 
+func (r *Reply) IsOk() bool {
+	return r.Pairs["RESULT"] == ResultOk
+}
+
+func (r *Reply) GetResult() string {
+	result, ok := r.Pairs["RESULT"]
+
+	if !ok {
+		// TODO Add some debug output
+		return ""
+	}
+
+	return result
+}
+
 func parseReply(line string) (*Reply, error) {
 	line = strings.TrimSpace(line)
 	parts := strings.Split(line, " ")

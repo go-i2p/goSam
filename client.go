@@ -226,11 +226,7 @@ func (c *Client) hello() error {
 		return err
 	}
 
-	if r.Topic != "HELLO" {
-		return fmt.Errorf("Client Hello Unknown Reply: %+v\n", r)
-	}
-
-	if r.Pairs["RESULT"] != "OK" {
+	if !r.IsOk() {
 		return fmt.Errorf("Handshake did not succeed\nReply:%+v\n", r)
 	}
 
@@ -248,7 +244,37 @@ func (c *Client) sendCmd(str string, args ...interface{}) (*Reply, error) {
 		return nil, err
 	}
 
-	return parseReply(line)
+	r, err := parseReply(line)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := c.validateResponse(str, r); err != nil {
+		return nil, fmt.Errorf("unrecogized reply: %+v\n%v", r, err)
+	}
+
+	return r, nil
+}
+
+func (c *Client) validateResponse(command string, reply *Reply) error {
+	expectedTypesMap := map[string]string{
+		"HELLO":   "REPLY",
+		"DEST":    "REPLY",
+		"NAMING":  "REPLY",
+		"SESSION": "STATUS",
+		"STREAM":  "STATUS",
+	}
+	commandTopic := strings.SplitN(command, "", 1)[0]
+
+	if commandTopic != reply.Topic {
+		return fmt.Errorf("unrecogized reply topic. expecting: %v, got: %v", commandTopic, reply.Topic)
+	}
+
+	if expectedTypesMap[commandTopic] != reply.Type {
+		return fmt.Errorf("unrecogized reply type. expecting: %v, got: %v", expectedTypesMap[commandTopic], reply.Type)
+	}
+
+	return nil
 }
 
 // Close the underlying socket to SAM

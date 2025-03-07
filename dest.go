@@ -46,9 +46,6 @@ func (c *Client) NewDestination(kind ...string) (string, string, error) {
 	if err != nil {
 		return "", "", err
 	}
-	if r.Topic != "DEST" {
-		return "", "", fmt.Errorf("NewDestination Unknown Reply: %+v\n", r)
-	}
 	return r.Pairs["PRIV"], r.Pairs["PUB"], nil
 
 }
