@@ -77,6 +77,8 @@ var SAMsigTypes = []string{
 
 var ValidSAMCommands = []string{
 	"HELLO",
+	"DEST",
+	"NAMING",
 	"SESSION",
 	"STREAM",
 }
@@ -235,6 +237,10 @@ func (c *Client) hello() error {
 
 // helper to send one command and parse the reply by sam
 func (c *Client) sendCmd(str string, args ...interface{}) (*Reply, error) {
+	if err := validateCommand(str); err != nil {
+		return nil, err
+	}
+
 	if _, err := fmt.Fprintf(c.SamConn, str, args...); err != nil {
 		return nil, err
 	}
@@ -249,14 +255,26 @@ func (c *Client) sendCmd(str string, args ...interface{}) (*Reply, error) {
 		return nil, err
 	}
 
-	if err := c.validateResponse(str, r); err != nil {
+	if err := c.validateReply(str, r); err != nil {
 		return nil, fmt.Errorf("unrecogized reply: %+v\n%v", r, err)
 	}
 
 	return r, nil
 }
 
-func (c *Client) validateResponse(command string, reply *Reply) error {
+func validateCommand(str string) error {
+	topic := strings.SplitN(str, " ", 1)[0]
+	for _, x := range ValidSAMCommands {
+		if x == topic {
+			return nil
+		}
+	}
+
+	return fmt.Errorf("unsupported sam command %v", topic)
+
+}
+
+func (c *Client) validateReply(command string, reply *Reply) error {
 	expectedTypesMap := map[string]string{
 		"HELLO":   "REPLY",
 		"DEST":    "REPLY",
@@ -264,7 +282,7 @@ func (c *Client) validateResponse(command string, reply *Reply) error {
 		"SESSION": "STATUS",
 		"STREAM":  "STATUS",
 	}
-	commandTopic := strings.SplitN(command, "", 1)[0]
+	commandTopic := strings.SplitN(command, " ", 1)[0]
 
 	if commandTopic != reply.Topic {
 		return fmt.Errorf("unrecogized reply topic. expecting: %v, got: %v", commandTopic, reply.Topic)
