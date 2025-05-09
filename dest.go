@@ -26,7 +26,7 @@ func validateKind(kind string) (string, error) {
 	if kint >= 0 && kint <= 7 {
 		return validateKindInner(kind), nil
 	}
-	return "SIGNATURE_TYPE=7", fmt.Errorf("Invalid sigType: %s", kind)
+	return "SIGNATURE_TYPE=7", fmt.Errorf("invalid sigType: %s", kind)
 }
 
 // Generate a new destination and return the base64 encoded string

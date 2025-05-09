@@ -222,21 +222,31 @@ func (c *Client) samaddr() string {
 
 // send the initial handshake command and check that the reply is ok
 func (c *Client) hello() error {
+	var r *Reply
+	var err error
 
-	r, err := c.sendCmd("HELLO VERSION MIN=3.%d MAX=3.%d %s %s\n", c.sammin, c.sammax, c.getUser(), c.getPass())
+	if c.getUser() == "" {
+		r, err = c.sendCmd("HELLO VERSION MIN=3.%d MAX=3.%d\n", c.sammin, c.sammax)
+
+	} else if c.getUser() != "" && c.getPass() == "" {
+		r, err = c.sendCmd("HELLO VERSION MIN=3.%d MAX=3.%d %s\n", c.sammin, c.sammax, c.getUser())
+	} else {
+		r, err = c.sendCmd("HELLO VERSION MIN=3.%d MAX=3.%d %s %s\n", c.sammin, c.sammax, c.getUser(), c.getPass())
+	}
+
 	if err != nil {
 		return err
 	}
 
 	if !r.IsOk() {
-		return fmt.Errorf("Handshake did not succeed\nReply:%+v\n", r)
+		return fmt.Errorf("handshake did not succeed\nReply:%+v", r)
 	}
 
 	return nil
 }
 
 // helper to send one command and parse the reply by sam
-func (c *Client) sendCmd(str string, args ...interface{}) (*Reply, error) {
+func (c *Client) sendCmd(str string, args ...any) (*Reply, error) {
 	if err := validateCommand(str); err != nil {
 		return nil, err
 	}
@@ -263,7 +273,7 @@ func (c *Client) sendCmd(str string, args ...interface{}) (*Reply, error) {
 }
 
 func validateCommand(str string) error {
-	topic := strings.SplitN(str, " ", 1)[0]
+	topic, _, _ := strings.Cut(str, " ")
 	for _, x := range ValidSAMCommands {
 		if x == topic {
 			return nil
@@ -282,7 +292,7 @@ func (c *Client) validateReply(command string, reply *Reply) error {
 		"SESSION": "STATUS",
 		"STREAM":  "STATUS",
 	}
-	commandTopic := strings.SplitN(command, " ", 1)[0]
+	commandTopic, _, _ := strings.Cut(command, " ")
 
 	if commandTopic != reply.Topic {
 		return fmt.Errorf("unrecogized reply topic. expecting: %v, got: %v", commandTopic, reply.Topic)

@@ -2,7 +2,7 @@ package gosam
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"log"
 	"net"
 	"strings"
@@ -66,7 +66,7 @@ func (c *Client) DialDatagramContextFree(addr string) (*DatagramConn, error) {
 		return nil, err
 	}
 
-	return nil, fmt.Errorf("Datagram support is not finished yet, come back later`")
+	return nil, errors.New("datagram support is not finished yet, come back later")
 }
 
 // DialStreamingContextFree is a "Dialer" for "Client-Like" Streaming connections.
