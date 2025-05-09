@@ -57,7 +57,7 @@ func parseReply(line string) (*Reply, error) {
 	line = strings.TrimSpace(line)
 	parts := strings.Split(line, " ")
 	if len(parts) < 3 {
-		return nil, fmt.Errorf("Malformed Reply.\n%s\n", line)
+		return nil, fmt.Errorf("malformed Reply.\n%s", line)
 	}
 	preParseReply := func() []string {
 		val := ""
@@ -98,7 +98,7 @@ func parseReply(line string) (*Reply, error) {
 			kvPair := strings.SplitN(v, "=", 2)
 			if kvPair != nil {
 				if len(kvPair) != 2 {
-					return nil, fmt.Errorf("Malformed key-value-pair len != 2.\n%s\n", kvPair)
+					return nil, fmt.Errorf("malformed key-value-pair len != 2.\n%s", kvPair)
 				}
 			}
 			r.Pairs[kvPair[0]] = kvPair[len(kvPair)-1]

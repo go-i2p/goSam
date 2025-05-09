@@ -1,16 +1,5 @@
 package gosam
 
-import (
-
-	//	"math"
-	"math/rand"
-	"time"
-)
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
-}
-
 // CreateSession creates a new Session of type style, with an optional destination.
 // an empty destination is interpreted as "TRANSIENT"
 // Returns the destination for the new Client or an error.
