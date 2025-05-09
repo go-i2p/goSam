@@ -227,7 +227,6 @@ func (c *Client) hello() error {
 
 	if c.getUser() == "" {
 		r, err = c.sendCmd("HELLO VERSION MIN=3.%d MAX=3.%d\n", c.sammin, c.sammax)
-
 	} else if c.getUser() != "" && c.getPass() == "" {
 		r, err = c.sendCmd("HELLO VERSION MIN=3.%d MAX=3.%d %s\n", c.sammin, c.sammax, c.getUser())
 	} else {
