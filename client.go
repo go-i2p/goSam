@@ -77,6 +77,8 @@ var SAMsigTypes = []string{
 
 var ValidSAMCommands = []string{
 	"HELLO",
+	"DEST",
+	"NAMING",
 	"SESSION",
 	"STREAM",
 }
@@ -220,25 +222,34 @@ func (c *Client) samaddr() string {
 
 // send the initial handshake command and check that the reply is ok
 func (c *Client) hello() error {
+	var r *Reply
+	var err error
 
-	r, err := c.sendCmd("HELLO VERSION MIN=3.%d MAX=3.%d %s %s\n", c.sammin, c.sammax, c.getUser(), c.getPass())
+	if c.getUser() == "" {
+		r, err = c.sendCmd("HELLO VERSION MIN=3.%d MAX=3.%d\n", c.sammin, c.sammax)
+	} else if c.getUser() != "" && c.getPass() == "" {
+		r, err = c.sendCmd("HELLO VERSION MIN=3.%d MAX=3.%d %s\n", c.sammin, c.sammax, c.getUser())
+	} else {
+		r, err = c.sendCmd("HELLO VERSION MIN=3.%d MAX=3.%d %s %s\n", c.sammin, c.sammax, c.getUser(), c.getPass())
+	}
+
 	if err != nil {
 		return err
 	}
 
-	if r.Topic != "HELLO" {
-		return fmt.Errorf("Client Hello Unknown Reply: %+v\n", r)
-	}
-
-	if r.Pairs["RESULT"] != "OK" {
-		return fmt.Errorf("Handshake did not succeed\nReply:%+v\n", r)
+	if !r.IsOk() {
+		return fmt.Errorf("handshake did not succeed\nReply:%+v", r)
 	}
 
 	return nil
 }
 
 // helper to send one command and parse the reply by sam
-func (c *Client) sendCmd(str string, args ...interface{}) (*Reply, error) {
+func (c *Client) sendCmd(str string, args ...any) (*Reply, error) {
+	if err := validateCommand(str); err != nil {
+		return nil, err
+	}
+
 	if _, err := fmt.Fprintf(c.SamConn, str, args...); err != nil {
 		return nil, err
 	}
@@ -248,7 +259,49 @@ func (c *Client) sendCmd(str string, args ...interface{}) (*Reply, error) {
 		return nil, err
 	}
 
-	return parseReply(line)
+	r, err := parseReply(line)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := c.validateReply(str, r); err != nil {
+		return nil, fmt.Errorf("unrecogized reply: %+v\n%v", r, err)
+	}
+
+	return r, nil
+}
+
+func validateCommand(str string) error {
+	topic, _, _ := strings.Cut(str, " ")
+	for _, x := range ValidSAMCommands {
+		if x == topic {
+			return nil
+		}
+	}
+
+	return fmt.Errorf("unsupported sam command %v", topic)
+
+}
+
+func (c *Client) validateReply(command string, reply *Reply) error {
+	expectedTypesMap := map[string]string{
+		"HELLO":   "REPLY",
+		"DEST":    "REPLY",
+		"NAMING":  "REPLY",
+		"SESSION": "STATUS",
+		"STREAM":  "STATUS",
+	}
+	commandTopic, _, _ := strings.Cut(command, " ")
+
+	if commandTopic != reply.Topic {
+		return fmt.Errorf("unrecogized reply topic. expecting: %v, got: %v", commandTopic, reply.Topic)
+	}
+
+	if expectedTypesMap[commandTopic] != reply.Type {
+		return fmt.Errorf("unrecogized reply type. expecting: %v, got: %v", expectedTypesMap[commandTopic], reply.Type)
+	}
+
+	return nil
 }
 
 // Close the underlying socket to SAM

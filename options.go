@@ -1,6 +1,7 @@
 package gosam
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -21,11 +22,11 @@ func SetAddr(s ...string) func(*Client) error {
 						c.port = split[1]
 						return nil
 					}
-					return fmt.Errorf("Invalid port")
+					return errors.New("invalid port")
 				}
-				return fmt.Errorf("Invalid port; non-number")
+				return errors.New("invalid port; non-number")
 			}
-			return fmt.Errorf("Invalid address; use host:port %s", split)
+			return fmt.Errorf("invalid address; use host:port %s", split)
 		} else if len(s) == 2 {
 			if i, err := strconv.Atoi(s[1]); err == nil {
 				if i < 65536 {
@@ -33,11 +34,11 @@ func SetAddr(s ...string) func(*Client) error {
 					c.port = s[1]
 					return nil
 				}
-				return fmt.Errorf("Invalid port")
+				return errors.New("invalid port")
 			}
-			return fmt.Errorf("Invalid port; non-number")
+			return errors.New("invalid port; non-number")
 		} else {
-			return fmt.Errorf("Invalid address")
+			return errors.New("invalid address")
 		}
 	}
 }
@@ -50,7 +51,7 @@ func SetAddrMixed(s string, i int) func(*Client) error {
 			c.port = strconv.Itoa(i)
 			return nil
 		}
-		return fmt.Errorf("Invalid port")
+		return errors.New("invalid port")
 	}
 }
 
@@ -81,10 +82,10 @@ func SetPass(s string) func(*Client) error {
 func SetSAMMinVersion(i int) func(*Client) error {
 	return func(c *Client) error {
 		if i < 0 {
-			return fmt.Errorf("SAM version must be greater than or equal to 0")
+			return errors.New("SAM version must be greater than or equal to 0")
 		}
 		if i > 3 {
-			return fmt.Errorf("SAM version must be less than or equal to 3")
+			return errors.New("SAM version must be less than or equal to 3")
 		}
 		c.sammin = i
 		return nil
@@ -94,10 +95,10 @@ func SetSAMMinVersion(i int) func(*Client) error {
 func SetSAMMaxVersion(i int) func(*Client) error {
 	return func(c *Client) error {
 		if i < 0 {
-			return fmt.Errorf("SAM version must be greater than or equal to 0")
+			return errors.New("SAM version must be greater than or equal to 0")
 		}
 		if i > 3 {
-			return fmt.Errorf("SAM version must be less than or equal to 3")
+			return errors.New("SAM version must be less than or equal to 3")
 		}
 		c.sammin = i
 		return nil
@@ -125,13 +126,13 @@ func SetPort(s string) func(*Client) error {
 	return func(c *Client) error {
 		port, err := strconv.Atoi(s)
 		if err != nil {
-			return fmt.Errorf("Invalid port; non-number")
+			return errors.New("invalid port; non-number")
 		}
 		if port < 65536 && port > -1 {
 			c.port = s
 			return nil
 		}
-		return fmt.Errorf("Invalid port")
+		return errors.New("invalid port")
 	}
 }
 
@@ -142,7 +143,7 @@ func SetPortInt(i int) func(*Client) error {
 			c.port = strconv.Itoa(i)
 			return nil
 		}
-		return fmt.Errorf("Invalid port")
+		return errors.New("invalid port")
 	}
 }
 
@@ -151,13 +152,13 @@ func SetFromPort(s string) func(*Client) error {
 	return func(c *Client) error {
 		port, err := strconv.Atoi(s)
 		if err != nil {
-			return fmt.Errorf("Invalid port; non-number")
+			return errors.New("invalid port; non-number")
 		}
 		if port < 65536 && port > -1 {
 			c.fromport = s
 			return nil
 		}
-		return fmt.Errorf("Invalid port")
+		return errors.New("invalid port")
 	}
 }
 
@@ -168,7 +169,7 @@ func SetFromPortInt(i int) func(*Client) error {
 			c.fromport = strconv.Itoa(i)
 			return nil
 		}
-		return fmt.Errorf("Invalid port")
+		return errors.New("invalid port")
 	}
 }
 
@@ -177,13 +178,13 @@ func SetToPort(s string) func(*Client) error {
 	return func(c *Client) error {
 		port, err := strconv.Atoi(s)
 		if err != nil {
-			return fmt.Errorf("Invalid port; non-number")
+			return errors.New("invalid port; non-number")
 		}
 		if port < 65536 && port > -1 {
 			c.toport = s
 			return nil
 		}
-		return fmt.Errorf("Invalid port")
+		return errors.New("invalid port")
 	}
 }
 
@@ -194,7 +195,7 @@ func SetToPortInt(i int) func(*Client) error {
 			c.fromport = strconv.Itoa(i)
 			return nil
 		}
-		return fmt.Errorf("Invalid port")
+		return errors.New("invalid port")
 	}
 }
 
@@ -214,7 +215,7 @@ func SetInLength(u uint) func(*Client) error {
 			c.inLength = u
 			return nil
 		}
-		return fmt.Errorf("Invalid inbound tunnel length")
+		return errors.New("invalid inbound tunnel length")
 	}
 }
 
@@ -225,7 +226,7 @@ func SetOutLength(u uint) func(*Client) error {
 			c.outLength = u
 			return nil
 		}
-		return fmt.Errorf("Invalid outbound tunnel length")
+		return errors.New("invalid outbound tunnel length")
 	}
 }
 
@@ -236,7 +237,7 @@ func SetInVariance(i int) func(*Client) error {
 			c.inVariance = i
 			return nil
 		}
-		return fmt.Errorf("Invalid inbound tunnel length")
+		return errors.New("invalid inbound tunnel length")
 	}
 }
 
@@ -247,7 +248,7 @@ func SetOutVariance(i int) func(*Client) error {
 			c.outVariance = i
 			return nil
 		}
-		return fmt.Errorf("Invalid outbound tunnel variance")
+		return errors.New("invalid outbound tunnel variance")
 	}
 }
 
@@ -258,7 +259,7 @@ func SetInQuantity(u uint) func(*Client) error {
 			c.inQuantity = u
 			return nil
 		}
-		return fmt.Errorf("Invalid inbound tunnel quantity")
+		return errors.New("invalid inbound tunnel quantity")
 	}
 }
 
@@ -269,7 +270,7 @@ func SetOutQuantity(u uint) func(*Client) error {
 			c.outQuantity = u
 			return nil
 		}
-		return fmt.Errorf("Invalid outbound tunnel quantity")
+		return errors.New("invalid outbound tunnel quantity")
 	}
 }
 
@@ -280,7 +281,7 @@ func SetInBackups(u uint) func(*Client) error {
 			c.inBackups = u
 			return nil
 		}
-		return fmt.Errorf("Invalid inbound tunnel backup quantity")
+		return errors.New("invalid inbound tunnel backup quantity")
 	}
 }
 
@@ -291,7 +292,7 @@ func SetOutBackups(u uint) func(*Client) error {
 			c.outBackups = u
 			return nil
 		}
-		return fmt.Errorf("Invalid outbound tunnel backup quantity")
+		return errors.New("invalid outbound tunnel backup quantity")
 	}
 }
 
@@ -335,7 +336,7 @@ func SetReduceIdleTime(u uint) func(*Client) error {
 			c.reduceIdleTime = u
 			return nil
 		}
-		return fmt.Errorf("Invalid reduce idle time %v", u)
+		return fmt.Errorf("invalid reduce idle time %v", u)
 	}
 }
 
@@ -346,7 +347,7 @@ func SetReduceIdleQuantity(u uint) func(*Client) error {
 			c.reduceIdleQuantity = u
 			return nil
 		}
-		return fmt.Errorf("Invalid reduced tunnel quantity %v", u)
+		return fmt.Errorf("invalid reduced tunnel quantity %v", u)
 	}
 }
 
@@ -365,7 +366,7 @@ func SetCloseIdleTime(u uint) func(*Client) error {
 			c.closeIdleTime = u
 			return nil
 		}
-		return fmt.Errorf("Invalid close idle time %v", u)
+		return fmt.Errorf("invalid close idle time %v", u)
 	}
 }
 
@@ -401,7 +402,7 @@ func SetSignatureType(s string) func(*Client) error {
 				return nil
 			}
 		}
-		return fmt.Errorf("Invalid signature type specified at construction time")
+		return errors.New("invalid signature type specified at construction time")
 	}
 }
 

@@ -15,20 +15,14 @@ func (c *Client) Lookup(name string) (string, error) {
 		return "", nil
 	}
 
-	// TODO: move check into sendCmd()
-	if r.Topic != "NAMING" || r.Type != "REPLY" {
-		return "", fmt.Errorf("Naming Unknown Reply: %s, %s\n", r.Topic, r.Type)
-	}
-
-	result := r.Pairs["RESULT"]
-	if result != "OK" {
-		return "", ReplyError{result, r}
+	if !r.IsOk() {
+		return "", ReplyError{r.GetResult(), r}
 	}
 
 	if r.Pairs["NAME"] != name {
 		// somehow different on i2pd
 		if r.Pairs["NAME"] != "ME" {
-			return "", fmt.Errorf("Lookup() Replyed to another name.\nWanted:%s\nGot: %+v\n", name, r)
+			return "", fmt.Errorf("Lookup() Replyed to another name.\nWanted:%s\nGot: %+v", name, r)
 		}
 		fmt.Fprintln(os.Stderr, "WARNING: Lookup() Replyed to another name. assuming i2pd c++ fluke")
 	}

@@ -1,9 +1,5 @@
 package gosam
 
-import (
-	"fmt"
-)
-
 // StreamConnect asks SAM for a TCP-Like connection to dest, has to be called on a new Client
 func (c *Client) StreamConnect(dest string) error {
 	if dest == "" {
@@ -14,14 +10,8 @@ func (c *Client) StreamConnect(dest string) error {
 		return err
 	}
 
-	// TODO: move check into sendCmd()
-	if r.Topic != "STREAM" || r.Type != "STATUS" {
-		return fmt.Errorf("Stream Connect Unknown Reply: %+v\n", r)
-	}
-
-	result := r.Pairs["RESULT"]
-	if result != "OK" {
-		return ReplyError{result, r}
+	if !r.IsOk() {
+		return ReplyError{r.GetResult(), r}
 	}
 
 	return nil
@@ -34,14 +24,8 @@ func (c *Client) StreamAccept() (*Reply, error) {
 		return nil, err
 	}
 
-	// TODO: move check into sendCmd()
-	if r.Topic != "STREAM" || r.Type != "STATUS" {
-		return nil, fmt.Errorf("Stream Accept Unknown Reply: %+v\n", r)
-	}
-
-	result := r.Pairs["RESULT"]
-	if result != "OK" {
-		return nil, ReplyError{result, r}
+	if !r.IsOk() {
+		return nil, ReplyError{r.GetResult(), r}
 	}
 
 	return r, nil
