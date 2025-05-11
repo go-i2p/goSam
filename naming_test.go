@@ -25,8 +25,8 @@ func TestClientLookupInvalid(t *testing.T) {
 	if !ok {
 		t.Fatalf("client.Lookup() should return a ReplyError")
 	}
-	if repErr.Result != ResultKeyNotFound {
-		t.Errorf("client.Lookup() should throw an ResultKeyNotFound error.\nGot:%+v%s%s\n", repErr, "!=", ResultKeyNotFound)
+	if repErr.Result != ResultKeyNotFound && repErr.Result != ResultInvalidKey {
+		t.Errorf("client.Lookup() should either throw an ResultKeyNotFound(i2p) or ResultInvalidKey(i2pd) error.\nGot:%+v%s%s\n", repErr, "!=", ResultKeyNotFound)
 	}
 	if err := client.Close(); err != nil {
 		t.Fatalf("client.Close() Error: %q\n", err)
