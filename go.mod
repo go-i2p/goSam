@@ -1,6 +1,6 @@
 module github.com/go-i2p/gosam
 
-go 1.26.0
+go 1.26.3
 
 require (
 	github.com/getlantern/go-socks5 v0.0.0-20171114193258-79d4dd3e2db5
